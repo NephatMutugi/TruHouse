@@ -70,7 +70,7 @@
     <LinearLayout
         android:id="@+id/linearLayoutPreQualified"
         android:layout_width="0dp"
-        android:layout_height="80dp"
+        android:layout_height="100dp"
         android:layout_marginStart="2dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="1dp"
@@ -85,7 +85,7 @@
             android:id="@+id/imageView2"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="20dp"
             android:src="@drawable/ic_check" />
 
         <TextView
@@ -101,7 +101,7 @@
     <LinearLayout
         android:id="@+id/linearLayoutMortgageCalc"
         android:layout_width="0dp"
-        android:layout_height="80dp"
+        android:layout_height="100dp"
         android:layout_marginStart="1dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="2dp"
@@ -116,7 +116,7 @@
             android:id="@+id/mortgage_calc"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="20dp"
             android:src="@drawable/ic_mortgage_calculator" />
 
         <TextView
@@ -132,13 +132,13 @@
     <LinearLayout
         android:id="@+id/linearLayoutRates"
         android:layout_width="0dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="1dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="2dp"
         android:layout_marginEnd="1dp"
         android:background="@color/white"
         android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="linearLayoutSettings"
+        app:layout_constraintEnd_toStartOf="@id/linearLayoutSettings"
         app:layout_constraintHorizontal_weight="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayoutPreQualified">
@@ -147,7 +147,7 @@
             android:id="@+id/imgRate"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="20dp"
             android:src="@drawable/ic_mortgage_rates" />
 
         <TextView
@@ -164,9 +164,10 @@
     <LinearLayout
         android:id="@+id/linearLayoutSettings"
         android:layout_width="0dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="1dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="2dp"
         android:background="@color/white"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -178,7 +179,7 @@
             android:id="@+id/imgSettings"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="20dp"
             android:src="@drawable/ic_baseline_settings" />
 
         <TextView
@@ -190,4 +191,52 @@
             android:textSize="14sp" />
 
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutHelp"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="1dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toStartOf="@id/linearLayoutBlank"
+        app:layout_constraintHorizontal_weight="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutRates">
+
+        <ImageView
+            android:id="@+id/imgHelp"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/ic_help_center" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/help_center"
+            android:textColor="@color/icons"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutBlank"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="2dp"
+        android:background="@color/white"
+        app:layout_constraintHorizontal_weight="0.5"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutRates"
+        app:layout_constraintStart_toEndOf="@+id/linearLayoutHelp">
+
+    </LinearLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
