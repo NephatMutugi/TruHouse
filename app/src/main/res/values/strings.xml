@@ -7,7 +7,7 @@
     <string name="saved">Saved</string>
     <string name="alerts">Alerts</string>
     <string name="more">More</string>
-    <string name="welcome">Welcome to Tru house</string>
+    <string name="welcome">Welcome to Fortune Homes</string>
     <string name="sign_in">Sign In</string>
     <string name="get_pre_qualified">Get Pre-Qualified</string>
     <string name="mortgage_calculators">Mortgage Calculators</string>
@@ -18,4 +18,11 @@
     <string name="enter_your_email">Enter your email</string>
     <string name="enter_password">Enter Password</string>
     <string name="forgot_your_password">Forgot Your Password?</string>
+    <string name="register_ac">No account? Register here</string>
+    <string name="recommended_home">Recommended Homes</string>
+    <string name="rec_alerts">Turn on alerts to see homes we think you\'ll love based on your saves and searches</string>
+    <string name="get_recommendations">Get Recommendations</string>
+    <string name="saved_homes_txt">Saved Homes</string>
+    <string name="saved_text">You haven\'t saved any homes yet.Start searching for properties to add now</string>
+    <string name="search_homes">Search Homes</string>
 </resources>
