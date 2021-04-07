@@ -25,4 +25,8 @@
     <string name="saved_homes_txt">Saved Homes</string>
     <string name="saved_text">You haven\'t saved any homes yet.Start searching for properties to add now</string>
     <string name="search_homes">Search Homes</string>
+    <string name="register_new_user">REGISTER NEW USER</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="username">Username</string>
+    <string name="confirm_password">Confirm Password</string>
 </resources>
