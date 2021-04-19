@@ -14,6 +14,8 @@ import com.nephat.truhouse.R;
 
 public class SignInActivity extends AppCompatActivity {
 
+    private static final String TAG = "SignInActivity";
+
     private Button mSignInBtn;
     private TextInputEditText mSignInEmail, mSignInPassword;
     private TextView mForgotPass, mLinkRegister;
