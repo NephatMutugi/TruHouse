@@ -1,8 +1,10 @@
-package com.nephat.truhouse;
+package com.nephat.truhouse.authentication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.nephat.truhouse.R;
 
 public class RegisterActivity extends AppCompatActivity {
 

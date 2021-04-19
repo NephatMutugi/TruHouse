@@ -13,8 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RegisterActivity"></activity>
-        <activity android:name=".SignInActivity" />
+        <activity android:name=".authentication.RegisterActivity"></activity>
+        <activity android:name=".authentication.SignInActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

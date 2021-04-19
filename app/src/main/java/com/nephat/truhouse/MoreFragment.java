@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.nephat.truhouse.authentication.SignInActivity;
+
 
 public class MoreFragment extends Fragment {
 

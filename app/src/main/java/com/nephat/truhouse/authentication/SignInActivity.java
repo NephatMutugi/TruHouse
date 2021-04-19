@@ -1,4 +1,4 @@
-package com.nephat.truhouse;
+package com.nephat.truhouse.authentication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.nephat.truhouse.MainActivity;
+import com.nephat.truhouse.R;
 
 public class SignInActivity extends AppCompatActivity {
 
