@@ -34,6 +34,9 @@ public class SignInActivity extends AppCompatActivity {
                 Intent intent = new Intent(SignInActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
+
+                // FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                // fragmentTransaction.replace(R.id.moreContainer, new MoreFragment()).commit();
             }
         });
 
