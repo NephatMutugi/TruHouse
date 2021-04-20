@@ -1,5 +1,6 @@
 package com.nephat.truhouse.authentication;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -14,10 +15,23 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.textfield.TextInputEditText;
 import com.nephat.truhouse.MainActivity;
 import com.nephat.truhouse.R;
 import com.vishnusivadas.advanced_httpurlconnection.PutData;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -26,6 +40,7 @@ public class RegisterActivity extends AppCompatActivity {
     private TextInputEditText mUserName, mUserEmail, mPassword, mConfirmPassword;
     private Button mRegisterBtn;
     private TextView mLinkLogin;
+    private static String URL_REGISTER = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,28 +70,118 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                final String username, userEmail, userPassword, confirmPassword;
-                username = String.valueOf(mUserName.getText());
-                userEmail = String.valueOf(mUserEmail.getText());
-                userPassword = String.valueOf(mPassword.getText());
-                confirmPassword = String.valueOf(mConfirmPassword.getText());
+                Regist();
+            }
+        });
 
-                if (TextUtils.isEmpty(userEmail)){
-                    mUserEmail.setError("Email is required");
-                    return;
-                } if (TextUtils.isEmpty(username)){
-                    mUserName.setError("User Name is required");
-                    return;
-                } if (TextUtils.isEmpty(userPassword)){
-                    mPassword.setError("Password is required");
-                    return;
-                } if (userPassword.length() < 6){
-                    mPassword.setError("Password should be 6 or more characters");
-                    return;
-                } if (!TextUtils.equals(userPassword, confirmPassword)){
-                    mConfirmPassword.setError("Passwords do not match");
-                } else {
-                    //Start ProgressBar first (Set visibility VISIBLE)
+    }
+
+    private void Regist(){
+        final String username, userEmail, userPassword, confirmPassword;
+        username = String.valueOf(mUserName.getText());
+        userEmail = String.valueOf(mUserEmail.getText());
+        userPassword = String.valueOf(mPassword.getText());
+        confirmPassword = String.valueOf(mConfirmPassword.getText());
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_REGISTER,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        try{
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+
+                            if (success.equals("1")){
+                                toastMessage("Register success");
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            toastMessage("Registration failed" +e.toString());
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        toastMessage("Registration failed" +error.toString());
+
+                    }
+                })
+        {
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String,String> params = new HashMap<>();
+                params.put("name", username);
+                params.put("email", userEmail);
+                params.put("password", userPassword);
+
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+
+
+
+
+
+
+        if (TextUtils.isEmpty(userEmail)){
+            mUserEmail.setError("Email is required");
+            return;
+        } if (TextUtils.isEmpty(username)){
+            mUserName.setError("User Name is required");
+            return;
+        } if (TextUtils.isEmpty(userPassword)){
+            mPassword.setError("Password is required");
+            return;
+        } if (userPassword.length() < 6){
+            mPassword.setError("Password should be 6 or more characters");
+            return;
+        } if (!TextUtils.equals(userPassword, confirmPassword)){
+            mConfirmPassword.setError("Passwords do not match");
+        } else {
+
+            toastMessage("Result");
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private void toastMessage(String message)
+    {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+    }
+
+    private void hideSoftKeyboard()
+    {
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+    }
+}
+
+
+/*           //Start ProgressBar first (Set visibility VISIBLE)
                     Handler handler = new Handler(Looper.getMainLooper());
                     handler.post(new Runnable() {
                         @Override
@@ -114,20 +219,5 @@ public class RegisterActivity extends AppCompatActivity {
                             //End Write and Read data with URL
                         }
                     });
-                }
 
-            }
-        });
-
-    }
-
-    private void toastMessage(String message)
-    {
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
-    }
-
-    private void hideSoftKeyboard()
-    {
-        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-    }
-}
+                */
