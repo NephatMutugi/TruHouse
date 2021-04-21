@@ -1,4 +1,4 @@
-package com.nephat.truhouse;
+package com.nephat.truhouse.fragments;
 
 import android.os.Bundle;
 
@@ -8,10 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class FeedsFragment extends Fragment {
+import com.nephat.truhouse.R;
 
+public class AlertsFragment extends Fragment {
 
-    public FeedsFragment() {
+    public AlertsFragment() {
         // Required empty public constructor
     }
 
@@ -19,6 +20,6 @@ public class FeedsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_feeds, container, false);
+        return inflater.inflate(R.layout.fragment_alerts, container, false);
     }
 }

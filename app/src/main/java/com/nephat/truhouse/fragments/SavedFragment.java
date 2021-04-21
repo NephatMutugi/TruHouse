@@ -1,4 +1,4 @@
-package com.nephat.truhouse;
+package com.nephat.truhouse.fragments;
 
 import android.os.Bundle;
 
@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.nephat.truhouse.R;
 
 public class SavedFragment extends Fragment {
 

@@ -1,4 +1,4 @@
-package com.nephat.truhouse;
+package com.nephat.truhouse.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.nephat.truhouse.R;
 import com.nephat.truhouse.authentication.SignInActivity;
 
 

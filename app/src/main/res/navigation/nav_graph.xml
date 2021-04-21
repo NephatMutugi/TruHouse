@@ -6,27 +6,27 @@
     app:startDestination="@id/feedsFragment">
     <fragment
         android:id="@+id/feedsFragment"
-        android:name="com.nephat.truhouse.FeedsFragment"
+        android:name="com.nephat.truhouse.fragments.FeedsFragment"
         android:label="fragment_feeds"
         tools:layout="@layout/fragment_feeds" />
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.nephat.truhouse.MapFragment"
+        android:name="com.nephat.truhouse.fragments.MapFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_map" />
     <fragment
         android:id="@+id/savedFragment"
-        android:name="com.nephat.truhouse.SavedFragment"
+        android:name="com.nephat.truhouse.fragments.SavedFragment"
         android:label="fragment_saved"
         tools:layout="@layout/fragment_saved" />
     <fragment
         android:id="@+id/alertsFragment"
-        android:name="com.nephat.truhouse.AlertsFragment"
+        android:name="com.nephat.truhouse.fragments.AlertsFragment"
         android:label="fragment_alerts"
         tools:layout="@layout/fragment_alerts" />
     <fragment
         android:id="@+id/moreFragment"
-        android:name="com.nephat.truhouse.MoreFragment"
+        android:name="com.nephat.truhouse.fragments.MoreFragment"
         android:label="fragment_more"
         tools:layout="@layout/fragment_more" />
 </navigation>

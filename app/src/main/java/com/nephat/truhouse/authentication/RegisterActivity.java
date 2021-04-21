@@ -40,7 +40,7 @@ public class RegisterActivity extends AppCompatActivity {
     private TextInputEditText mUserName, mUserEmail, mPassword, mConfirmPassword;
     private Button mRegisterBtn;
     private TextView mLinkLogin;
-    private static String URL_REGISTER = "";
+    final static String URL_REGISTER = "http://192.168.100.2/realEstate/register.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +70,8 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                hideSoftKeyboard();
+
                 Regist();
             }
         });
@@ -83,54 +85,6 @@ public class RegisterActivity extends AppCompatActivity {
         userPassword = String.valueOf(mPassword.getText());
         confirmPassword = String.valueOf(mConfirmPassword.getText());
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_REGISTER,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-                        try{
-                            JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-
-                            if (success.equals("1")){
-                                toastMessage("Register success");
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            toastMessage("Registration failed" +e.toString());
-                        }
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        toastMessage("Registration failed" +error.toString());
-
-                    }
-                })
-        {
-            @Nullable
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-
-                Map<String,String> params = new HashMap<>();
-                params.put("name", username);
-                params.put("email", userEmail);
-                params.put("password", userPassword);
-
-                return params;
-            }
-        };
-
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
-
-
-
-
-
-
         if (TextUtils.isEmpty(userEmail)){
             mUserEmail.setError("Email is required");
             return;
@@ -140,32 +94,66 @@ public class RegisterActivity extends AppCompatActivity {
         } if (TextUtils.isEmpty(userPassword)){
             mPassword.setError("Password is required");
             return;
-        } if (userPassword.length() < 6){
-            mPassword.setError("Password should be 6 or more characters");
+        } if (userPassword.length() < 4){
+            mPassword.setError("Password should be 4 or more characters");
             return;
-        } if (!TextUtils.equals(userPassword, confirmPassword)){
+        } if (!TextUtils.equals(userPassword, confirmPassword)) {
             mConfirmPassword.setError("Passwords do not match");
         } else {
 
-            toastMessage("Result");
+
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_REGISTER,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                String success = jsonObject.getString("success");
+
+                                if (success.equals("1")) {
+                                    toastMessage("Register success");
+
+                                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                                    startActivity(intent);
+                                    finish();
+
+                                } else {
+                                    toastMessage("User already exists");
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                toastMessage("Registration failed" + e.toString());
+                            }
+
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            toastMessage("Registration failed" + error.toString());
+
+                        }
+                    }) {
+                @Nullable
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+
+                    Map<String, String> params = new HashMap<>();
+                    params.put("name", username);
+                    params.put("email", userEmail);
+                    params.put("password", userPassword);
+
+                    return params;
+                }
+            };
+
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
+            requestQueue.add(stringRequest);
+
         }
+
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -179,6 +167,21 @@ public class RegisterActivity extends AppCompatActivity {
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /*           //Start ProgressBar first (Set visibility VISIBLE)
