@@ -36,16 +36,16 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
-        mSignInBtn = findViewById(R.id.sign_in_btn);
-        mLinkRegister = findViewById(R.id.link_reg_text);
         mSignInEmail = findViewById(R.id.sign_in_email);
         mSignInPassword = findViewById(R.id.sign_in_pass);
+        mSignInBtn = findViewById(R.id.sign_in_btn);
+        mLinkRegister = findViewById(R.id.link_reg_text);
+
 
         mSignInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                performUserLogin();
+                performLogin();
             }
         });
 
@@ -61,12 +61,12 @@ public class SignInActivity extends AppCompatActivity {
 
         }
 
-    private void performUserLogin(){
+    private void performLogin(){
 
 
         String loginEmail, loginPassword;
-        loginEmail = String.valueOf(mSignInEmail);
-        loginPassword = String.valueOf(mSignInPassword);
+        loginEmail = String.valueOf(mSignInEmail.getText());
+        loginPassword = String.valueOf(mSignInPassword.getText());
 
         if (!loginEmail.isEmpty() || !loginPassword.isEmpty()){
 
@@ -94,7 +94,6 @@ public class SignInActivity extends AppCompatActivity {
 
                         } else{
 
-
                             toastMessage("Something went wrong...");
                         }
 
@@ -111,6 +110,7 @@ public class SignInActivity extends AppCompatActivity {
 
 
         } else {
+            toastMessage("Fields cannot be empty");
             mSignInEmail.setError("Please insert email");
             mSignInPassword.setError("Please insert password");
         }
