@@ -215,10 +215,11 @@
             android:src="@drawable/ic_help_center" />
 
         <TextView
+            android:id="@+id/logout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/help_center"
+            android:text="Logout"
             android:textColor="@color/icons"
             android:textSize="14sp" />
 
