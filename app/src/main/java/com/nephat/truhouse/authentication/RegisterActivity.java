@@ -1,37 +1,25 @@
 package com.nephat.truhouse.authentication;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.textfield.TextInputEditText;
-import com.nephat.truhouse.MainActivity;
 import com.nephat.truhouse.R;
-import com.vishnusivadas.advanced_httpurlconnection.PutData;
+import com.nephat.truhouse.models.ApiResponse;
+import com.nephat.truhouse.retrofitUtil.ApiClient;
+import com.nephat.truhouse.retrofitUtil.ApiInterface;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -72,11 +60,120 @@ public class RegisterActivity extends AppCompatActivity {
 
                 hideSoftKeyboard();
 
-                Regist();
+               performRegister();
             }
         });
 
     }
+
+
+    private void performRegister(){
+        String username, userEmail, userPassword, confirmPassword;
+        username = String.valueOf(mUserName.getText());
+        userEmail = String.valueOf(mUserEmail.getText());
+        userPassword = String.valueOf(mPassword.getText());
+        confirmPassword = String.valueOf(mConfirmPassword.getText());
+
+        if (TextUtils.isEmpty(userEmail)){
+            mUserEmail.setError("Email is required");
+            return;
+        } if (TextUtils.isEmpty(username)){
+            mUserName.setError("User Name is required");
+            return;
+        } if (TextUtils.isEmpty(userPassword)){
+            mPassword.setError("Password is required");
+            return;
+        } if (userPassword.length() < 4){
+            mPassword.setError("Password should be 4 or more characters");
+            return;
+        } if (!TextUtils.equals(userPassword, confirmPassword)) {
+            mConfirmPassword.setError("Passwords do not match");
+        } else {
+
+            Call<ApiResponse> call = ApiClient.getApiClient().create(ApiInterface.class).performUserRegister(username, userEmail, userPassword);
+            call.enqueue(new Callback<ApiResponse>() {
+                @Override
+                public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                    if (response.code() == 200){
+
+                        if (response.body().getStatus().equals("ok")){
+
+                            if (response.body().getResultCode() == 1){
+
+                                toastMessage("Registration was successful");
+                                onBackPressed();
+                                finish();
+
+                            } else {
+
+                                toastMessage("User already exists");
+
+                            }
+
+
+                        } else {
+
+                            displayUserInfo("Something went wrong...");
+                        }
+
+
+                    } else{
+
+                        displayUserInfo("Something went wrong...");
+
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ApiResponse> call, Throwable t) {
+
+                }
+            });
+
+        }
+    }
+
+    private void displayUserInfo(String message){
+      toastMessage(message);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    private void toastMessage(String message)
+    {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+    }
+
+    private void hideSoftKeyboard()
+    {
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*
 
     private void Regist(){
         final String username, userEmail, userPassword, confirmPassword;
@@ -153,20 +250,8 @@ public class RegisterActivity extends AppCompatActivity {
 
         }
 
-    }
+    } */
 
-
-
-    private void toastMessage(String message)
-    {
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
-    }
-
-    private void hideSoftKeyboard()
-    {
-        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-    }
-}
 
 
 

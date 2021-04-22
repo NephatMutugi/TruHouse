@@ -23,6 +23,12 @@ android {
     buildFeatures{
         dataBinding = true
     }
+
+    compileOptions{
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
 }
 
 dependencies {
@@ -49,7 +55,8 @@ dependencies {
     implementation "androidx.navigation:navigation-ui:$nav_version"
 
     //HTTP URL Connection
-    implementation 'com.github.VishnuSivadasVS:Advanced-HttpURLConnection:1.2'
+    //implementation 'com.github.VishnuSivadasVS:Advanced-HttpURLConnection:1.2'
+
     //Volley library
     implementation 'com.android.volley:volley:1.2.0'
 

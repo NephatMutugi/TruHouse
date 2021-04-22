@@ -1,39 +1,27 @@
 package com.nephat.truhouse.authentication;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.textfield.TextInputEditText;
 import com.nephat.truhouse.MainActivity;
 import com.nephat.truhouse.R;
-import com.vishnusivadas.advanced_httpurlconnection.PutData;
+import com.nephat.truhouse.models.ApiResponse;
+import com.nephat.truhouse.retrofitUtil.ApiClient;
+import com.nephat.truhouse.retrofitUtil.ApiInterface;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SignInActivity extends AppCompatActivity {
+
 
     private static final String TAG = "SignInActivity";
     private static final String URL_LOGIN = "http://192.168.100.2/realEstate/login.php";
@@ -41,6 +29,7 @@ public class SignInActivity extends AppCompatActivity {
     private Button mSignInBtn;
     private TextInputEditText mSignInEmail, mSignInPassword;
     private TextView mForgotPass, mLinkRegister;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,19 +45,7 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                final String loginEmail, loginPassword;
-                loginEmail = String.valueOf(mSignInEmail);
-                loginPassword = String.valueOf(mSignInPassword);
-
-                if (!loginEmail.isEmpty() || !loginPassword.isEmpty()){
-
-                  //  Login(loginEmail, loginPassword);
-
-                } else {
-                    mSignInEmail.setError("Please insert email");
-                    mSignInPassword.setError("Please insert password");
-                }
-
+                performUserLogin();
             }
         });
 
@@ -83,6 +60,63 @@ public class SignInActivity extends AppCompatActivity {
 
 
         }
+
+    private void performUserLogin(){
+
+
+        String loginEmail, loginPassword;
+        loginEmail = String.valueOf(mSignInEmail);
+        loginPassword = String.valueOf(mSignInPassword);
+
+        if (!loginEmail.isEmpty() || !loginPassword.isEmpty()){
+
+            Call<ApiResponse> call = ApiClient.getApiClient().create(ApiInterface.class).performUserLogin(loginEmail, loginPassword);
+            call.enqueue(new Callback<ApiResponse>() {
+                @Override
+                public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                    if (response.code() == 200){
+
+                        if (response.body().getStatus().equals("ok")){
+
+                            if (response.body().getResultCode() == 1){
+
+                                String name = response.body().getName();
+                                Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+
+
+
+                            } else {
+                                toastMessage("Login Failed");
+                            }
+
+
+                        } else{
+
+
+                            toastMessage("Something went wrong...");
+                        }
+
+                    } else {
+                        toastMessage("Something went wrong...");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ApiResponse> call, Throwable t) {
+
+                }
+            });
+
+
+        } else {
+            mSignInEmail.setError("Please insert email");
+            mSignInPassword.setError("Please insert password");
+        }
+    }
+
+
 
     private void toastMessage(String message) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
