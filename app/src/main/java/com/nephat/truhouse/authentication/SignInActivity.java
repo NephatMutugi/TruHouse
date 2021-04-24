@@ -49,6 +49,10 @@ public class SignInActivity extends AppCompatActivity {
         appConfig = new AppConfig(this);
         if (appConfig.isUserLogin()){
             String name = appConfig.getNameOfUser();
+            Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+            intent.putExtra("name", name);
+            startActivity(intent);
+            finish();
         }
 
 
@@ -68,8 +72,7 @@ public class SignInActivity extends AppCompatActivity {
             }
         });
 
-
-        }
+    }
 
     private void performLogin(){
 

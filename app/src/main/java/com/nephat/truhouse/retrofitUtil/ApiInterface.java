@@ -18,6 +18,8 @@ public interface ApiInterface {
    @POST("login.php")
     Call<ApiResponse> performUserLogin(@Field("email") String email, @Field("password") String password);
 
-
+   @FormUrlEncoded
+   @POST("fetchUsers.php")
+    Call<ApiResponse> fetchUserInfo(@Field("name") String name, @Field("email") String email);
 
 }
