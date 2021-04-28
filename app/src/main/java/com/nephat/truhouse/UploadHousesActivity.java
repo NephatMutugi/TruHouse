@@ -5,10 +5,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Base64;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -24,19 +22,7 @@ import androidx.core.content.ContextCompat;
 import com.nephat.truhouse.retrofitUtil.ApiClient;
 import com.nephat.truhouse.retrofitUtil.ApiInterface;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.HashMap;
-import java.util.Map;
 
 import retrofit2.Retrofit;
 
@@ -48,7 +34,7 @@ public class UploadHousesActivity extends AppCompatActivity {
     private int PICK_IMAGE_FROM_GALLERY_REQUEST = 1;
     private String houseType, housePrice, houseLocation, houseContact, houseDescription;
 
-    Bitmap bitmap;
+    private Bitmap bitmap;
     boolean check = true;
 
     private EditText mType, mPrice, mLocation, mContact, mDescription, mImageName;
@@ -106,12 +92,38 @@ public class UploadHousesActivity extends AppCompatActivity {
                 houseContact = String.valueOf(mContact.getText());
                 houseDescription = String.valueOf(mDescription.getText());
 
-                uploadImage();
+                //uploadImage();
             }
         });
 
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_FROM_GALLERY_REQUEST && resultCode == RESULT_OK && data != null ){
+            Uri path = data.getData();
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), path);
+                mHouseImage.setImageBitmap(bitmap);
+                mHouseImage.setVisibility(View.VISIBLE);
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+
+
+
+
+
+
+
+    /*
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -231,6 +243,8 @@ public class UploadHousesActivity extends AppCompatActivity {
             return stringBuilder.toString();
         }
     }
+
+    */
 
     private void toastMessage(String message) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();

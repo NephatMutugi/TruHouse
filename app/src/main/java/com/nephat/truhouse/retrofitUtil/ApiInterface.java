@@ -1,16 +1,12 @@
 package com.nephat.truhouse.retrofitUtil;
 
 import com.nephat.truhouse.models.ApiResponse;
+import com.nephat.truhouse.models.UploadModel;
 
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.Multipart;
 import retrofit2.http.POST;
-import retrofit2.http.Part;
 
 
 public interface ApiInterface {
@@ -28,7 +24,31 @@ public interface ApiInterface {
    @POST("fetchUsers.php")
     Call<ApiResponse> fetchUserInfo(@Field("name") String name, @Field("email") String email);
 
-   @Multipart
+   @FormUrlEncoded
+   @POST("upload.php")
+   Call<UploadModel> uploadImage(@Field("title") String title, @Field("location") String location, @Field("price") String price,
+                                 @Field("house_type") String house_type, @Field("contact") String contact,
+                                 @Field("description") String description, @Field("image") String image);
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+  /* @Multipart
     @POST("upload.php")
     Call<ResponseBody>uploadPhoto(@Part("description") RequestBody description,
                                   @Part("location") RequestBody location,
@@ -36,6 +56,4 @@ public interface ApiInterface {
                                   @Part("type") RequestBody type,
                                   @Part("contact") RequestBody contact,
                                   @Part MultipartBody.Part photo
-   );
-
-}
+   ); */
