@@ -51,7 +51,7 @@ public class UploadHousesActivity extends AppCompatActivity {
     Bitmap bitmap;
     boolean check = true;
 
-    private EditText mType, mPrice, mLocation, mContact, mDescription;
+    private EditText mType, mPrice, mLocation, mContact, mDescription, mImageName;
     private ImageView mHouseImage;
     private Button mSaveBtn, mSelectImageBtn;
 
@@ -69,6 +69,7 @@ public class UploadHousesActivity extends AppCompatActivity {
         mLocation = findViewById(R.id.editLocation);
         mContact = findViewById(R.id.editContact);
         mDescription = findViewById(R.id.editDescription);
+        mImageName = findViewById(R.id.imageTitle);
         mSaveBtn = findViewById(R.id.btnSubmit);
         mSelectImageBtn = findViewById(R.id.btnSelectImage);
         hideSoftKeyboard();
@@ -119,6 +120,7 @@ public class UploadHousesActivity extends AppCompatActivity {
             Uri uri = data.getData();
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                mHouseImage.setImageBitmap(bitmap);
             } catch (IOException e){
                 e.printStackTrace();
             }
@@ -151,12 +153,12 @@ public class UploadHousesActivity extends AppCompatActivity {
             protected String doInBackground(Void... voids) {
                 ImageProcessClass imageProcessClass = new ImageProcessClass();
                 HashMap<String, String> hashMap = new HashMap<>();
-                hashMap.put("image_path", convertImage);
                 hashMap.put("location", houseLocation);
                 hashMap.put("price", housePrice);
                 hashMap.put("house_type", houseType);
                 hashMap.put("contact", houseContact);
                 hashMap.put("description", houseDescription);
+                hashMap.put("image_path", convertImage);
 
                 String finalData = imageProcessClass.ImageHttpRequest(BASE_URL, hashMap);
 
@@ -178,25 +180,25 @@ public class UploadHousesActivity extends AppCompatActivity {
                 OutputStream outputStream;
                 BufferedWriter bufferedWriter;
                 BufferedReader bufferedReader;
-                int responseCode;
+                int RC;
                 url = new URL(requestURL);
                 httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setReadTimeout(19000);
+                httpURLConnection.setConnectTimeout(19000);
                 httpURLConnection.setRequestMethod("POST");
                 httpURLConnection.setDoInput(true);
                 httpURLConnection.setDoOutput(true);
                 outputStream = httpURLConnection.getOutputStream();
 
                 bufferedWriter = new BufferedWriter(
-                        new OutputStreamWriter(outputStream, "UTF-8")
-                );
+                        new OutputStreamWriter(outputStream, "UTF-8"));
 
                 bufferedWriter.write(bufferedWriterDataFN(PData));
                 bufferedWriter.flush();
                 bufferedWriter.close();
                 outputStream.close();
-                responseCode = httpURLConnection.getResponseCode();
-                if (responseCode == HttpURLConnection.HTTP_OK){
+                RC = httpURLConnection.getResponseCode();
+                if (RC == HttpURLConnection.HTTP_OK){
                     bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
                     stringBuilder = new StringBuilder();
                     String responseCode2;
