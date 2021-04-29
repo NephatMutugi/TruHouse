@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -19,20 +20,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.nephat.truhouse.models.UploadModel;
 import com.nephat.truhouse.retrofitUtil.ApiClient;
 import com.nephat.truhouse.retrofitUtil.ApiInterface;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class UploadHousesActivity extends AppCompatActivity {
 
     private static final String TAG = "UploadHousesActivity";
-    private static final String BASE_URL = "http://192.168.100.2/realEstate/upload.php";
+    private static final String BASE_URL = "http://192.168.100.2/realEstate/";
     private static final int MY_PERMISSIONS_REQUEST = 100;
     private int PICK_IMAGE_FROM_GALLERY_REQUEST = 1;
-    private String houseType, housePrice, houseLocation, houseContact, houseDescription;
+    private String houseType, housePrice, houseLocation, houseContact, houseDescription, houseName;
 
     private Bitmap bitmap;
     boolean check = true;
@@ -61,7 +67,6 @@ public class UploadHousesActivity extends AppCompatActivity {
         hideSoftKeyboard();
 
 
-
         if (ContextCompat.checkSelfPermission(UploadHousesActivity.this,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -86,18 +91,48 @@ public class UploadHousesActivity extends AppCompatActivity {
         mSaveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                houseType = String.valueOf(mType.getText());
-                housePrice = String.valueOf(mPrice.getText());
-                houseLocation = String.valueOf(mLocation.getText());
-                houseContact = String.valueOf(mContact.getText());
-                houseDescription = String.valueOf(mDescription.getText());
 
-                //uploadImage();
+                uploadImage();
             }
         });
 
     }
 
+    private void uploadImage(){
+        String image = imageToString();
+        houseName = String.valueOf(mImageName.getText());
+        houseType = String.valueOf(mType.getText());
+        housePrice = String.valueOf(mPrice.getText());
+        houseLocation = String.valueOf(mLocation.getText());
+        houseContact = String.valueOf(mContact.getText());
+        houseDescription = String.valueOf(mDescription.getText());
+
+        ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
+        Call<UploadModel> call = apiInterface.uploadImage(houseName, houseLocation, housePrice,
+                houseType, houseContact, houseDescription, image );
+
+        call.enqueue(new Callback<UploadModel>() {
+            @Override
+            public void onResponse(Call<UploadModel> call, Response<UploadModel> response) {
+                UploadModel model = response.body();
+                if (model != null) {
+                    toastMessage(model.getResponse());
+                } else {
+                    toastMessage("Image not uploaded");
+                }
+                //mHouseImage.setVisibility(View.VISIBLE);
+               mImageName.setText("");
+            }
+
+            @Override
+            public void onFailure(Call<UploadModel> call, Throwable t) {
+
+            }
+        });
+
+
+
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -114,6 +149,17 @@ public class UploadHousesActivity extends AppCompatActivity {
             }
         }
 
+    }
+
+
+    private String imageToString(){
+        ByteArrayOutputStream byteArrayOutputStream;
+        byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        byte[] imageByte = byteArrayOutputStream.toByteArray();
+        String convertImage = Base64.encodeToString(imageByte, Base64.DEFAULT);
+
+        return convertImage;
     }
 
 

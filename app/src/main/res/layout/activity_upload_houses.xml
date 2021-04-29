@@ -212,7 +212,6 @@
             android:id="@+id/imageTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
             android:hint="Enter image name"
             app:layout_constraintBottom_toTopOf="@+id/editHouseType"
             app:layout_constraintEnd_toEndOf="parent"
