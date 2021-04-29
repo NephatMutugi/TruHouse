@@ -3,57 +3,71 @@ package com.nephat.truhouse.recyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nephat.truhouse.R;
+import com.nephat.truhouse.models.DataModel;
+
+import java.util.List;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.AppViewHolder> {
 
-    String[] langData = {};
     private LayoutInflater layoutInflater;
+    private List<DataModel> list;
+    private ItemClickListener clickListener;
 
-    public UserAdapter(String[] _data){
-        langData = _data;
+
+    public UserAdapter(List<DataModel> list, ItemClickListener clickListener){
+
+        this.list = list;
+        this.clickListener = clickListener;
     }
 
 
 
     @NonNull
     @Override
-    public AppViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public UserAdapter.AppViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         layoutInflater = LayoutInflater.from(parent.getContext());
 
-        View view = layoutInflater.inflate(R.layout.house_item, parent, false);
+        View view = layoutInflater.inflate(R.layout.recycler_row, parent, false);
 
         return new AppViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AppViewHolder holder, int position) {
-        String title = langData[position];
-        holder.title.setText(title);
+    public void onBindViewHolder(@NonNull UserAdapter.AppViewHolder holder, int position) {
+        holder.titleText.setText(list.get(position).getTitle());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickListener.onItemClick(list.get(position));
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return langData.length;
+        return 0;
     }
 
     public class AppViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView home_icon;
-        TextView title;
+        TextView titleText;
 
         public AppViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            home_icon = itemView.findViewById(R.id.imgIcon);
-            title = itemView.findViewById(R.id.name_title);
-
+            titleText = itemView.findViewById(R.id.titleTextView);
         }
     }
+
+    public interface ItemClickListener{
+        public void onItemClick(DataModel dataModel);
+    }
+
 }

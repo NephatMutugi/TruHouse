@@ -10,51 +10,60 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nephat.truhouse.R;
+import com.nephat.truhouse.models.DataModel;
 import com.nephat.truhouse.recyclerView.UserAdapter;
 
-public class FeedsFragment extends Fragment {
+import java.util.ArrayList;
+
+public class FeedsFragment extends Fragment implements UserAdapter.ItemClickListener {
 
     private static final String TAG = "FeedsFragment";
 
-    private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
-    private RecyclerView.LayoutManager layoutManager;
-    private String[] langs = {"Java", "Kotlin", "C++", "C#", "Python", "Ruby", "React Native", "Javascript", "Flutter", "Scala", "Pascal"};
-
-    private View listItem;
+    private ArrayList<DataModel> list = new ArrayList<>();
 
 
     public FeedsFragment() {
         // Required empty public constructor
     }
 
+    public static FeedsFragment newInstance(){
+        return new FeedsFragment();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        listItem =  inflater.inflate(R.layout.fragment_feeds, container, false);
-        recyclerView = listItem.findViewById(R.id.retrieveHouses);
+        View view =  inflater.inflate(R.layout.fragment_feeds, container, false);
 
-        layoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(layoutManager);
+        initRecyclerView(view);
+        buildListData();
 
-        adapter = new UserAdapter(langs);
-        recyclerView.setAdapter(adapter);
-
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return view;
     }
 
-/*
+    private void initRecyclerView(View view){
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext());
+
+        recyclerView.setLayoutManager(linearLayoutManager);
+        UserAdapter adapter = new UserAdapter(list, this);
+        recyclerView.setAdapter(adapter);
+    }
+
+    private void buildListData(){
+        list.add(new DataModel("Bedsitter"));
+        list.add(new DataModel("One Bedroom"));
+        list.add(new DataModel("Apartment Studio"));
+        list.add(new DataModel("Cottages"));
+        list.add(new DataModel("Two Bedrooms"));
+        list.add(new DataModel("Apartments for sale"));
+        list.add(new DataModel("Last Semester"));
+    }
+
+
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onItemClick(DataModel dataModel) {
 
-        recyclerView = view.findViewById(R.id.retrieveHouses);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        //Retrieve info from users table using retrofit
-
-
-    } */
+    }
 }
