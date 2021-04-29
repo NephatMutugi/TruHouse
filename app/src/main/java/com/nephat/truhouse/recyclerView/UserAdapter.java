@@ -1,5 +1,6 @@
 package com.nephat.truhouse.recyclerView;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,15 +16,17 @@ import java.util.List;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.AppViewHolder> {
 
+    private Context context;
     private LayoutInflater layoutInflater;
     private List<DataModel> list;
     private ItemClickListener clickListener;
 
 
-    public UserAdapter(List<DataModel> list, ItemClickListener clickListener){
+    public UserAdapter(List<DataModel> list){
 
         this.list = list;
-        this.clickListener = clickListener;
+        //this.clickListener = clickListener;
+
     }
 
 
@@ -34,6 +37,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.AppViewHolder>
         layoutInflater = LayoutInflater.from(parent.getContext());
 
         View view = layoutInflater.inflate(R.layout.recycler_row, parent, false);
+       // View view = layoutInflater.from(parent.getContext()).inflate(R.layout.recycler_row, parent, false);
 
         return new AppViewHolder(view);
     }

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "745489977782",
+    "project_id": "truhouse-6eb6b",
+    "storage_bucket": "truhouse-6eb6b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:745489977782:android:ba487b05f8708971cfb117",
+        "android_client_info": {
+          "package_name": "com.nephat.truhouse"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "745489977782-oodpr909ijltrgfufmtl1sjj7lke3vi5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCHnsoYBPGLYphrmJxLplMXjGOkwVYkBZE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "745489977782-oodpr909ijltrgfufmtl1sjj7lke3vi5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

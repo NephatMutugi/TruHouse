@@ -36,18 +36,19 @@ public class FeedsFragment extends Fragment implements UserAdapter.ItemClickList
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_feeds, container, false);
 
-        initRecyclerView(view);
         buildListData();
+        initRecyclerView(view);
 
         return view;
     }
 
     private void initRecyclerView(View view){
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext());
-
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
-        UserAdapter adapter = new UserAdapter(list, this);
+       // recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setHasFixedSize(true);
+        UserAdapter adapter = new UserAdapter(list);
         recyclerView.setAdapter(adapter);
     }
 
