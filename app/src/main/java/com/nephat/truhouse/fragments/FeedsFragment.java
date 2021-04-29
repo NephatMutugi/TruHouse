@@ -4,30 +4,36 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nephat.truhouse.R;
-import com.nephat.truhouse.models.DataModel;
-import com.nephat.truhouse.recyclerView.UserAdapter;
+import com.nephat.truhouse.models.FetchHousesResponse;
+import com.nephat.truhouse.models.House;
+import com.nephat.truhouse.recyclerView.HouseAdapter;
+import com.nephat.truhouse.retrofitUtil.ApiClient;
+import com.nephat.truhouse.retrofitUtil.ApiInterface;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class FeedsFragment extends Fragment implements UserAdapter.ItemClickListener {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class FeedsFragment extends Fragment {
 
     private static final String TAG = "FeedsFragment";
 
-    private ArrayList<DataModel> list = new ArrayList<>();
-
+    RecyclerView recyclerView;
+    List<House> houseList;
 
     public FeedsFragment() {
         // Required empty public constructor
-    }
-
-    public static FeedsFragment newInstance(){
-        return new FeedsFragment();
     }
 
     @Override
@@ -36,12 +42,59 @@ public class FeedsFragment extends Fragment implements UserAdapter.ItemClickList
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_feeds, container, false);
 
-        buildListData();
-        initRecyclerView(view);
 
         return view;
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        recyclerView = view.findViewById(R.id.myRecyclerView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        //retrofit
+        String houseImage, houseType, houseLocation;
+        Call<FetchHousesResponse> call = ApiClient.getApiClient().create(ApiInterface.class).fetchHouseInfo();
+
+        call.enqueue(new Callback<FetchHousesResponse>() {
+            @Override
+            public void onResponse(Call<FetchHousesResponse> call, Response<FetchHousesResponse> response) {
+
+                if (response.isSuccessful()){
+                    houseList = response.body().getHouseList();
+                    recyclerView.setAdapter(new HouseAdapter(getActivity(), houseList));
+                } else {
+                    toastMessage(response.body().getError());
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FetchHousesResponse> call, Throwable t) {
+
+                 toastMessage(t.getMessage());
+            }
+        });
+
+    }
+
+    private void toastMessage(String message){
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+    }
+
+}
+
+
+
+
+
+
+//private ArrayList<DataModel> list = new ArrayList<>();
+
+
+/*
     private void initRecyclerView(View view){
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
@@ -67,4 +120,8 @@ public class FeedsFragment extends Fragment implements UserAdapter.ItemClickList
     public void onItemClick(DataModel dataModel) {
 
     }
-}
+
+
+        buildListData();
+        initRecyclerView(view);
+    */
