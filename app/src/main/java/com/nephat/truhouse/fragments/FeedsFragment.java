@@ -24,6 +24,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class FeedsFragment extends Fragment {
 
@@ -31,6 +32,9 @@ public class FeedsFragment extends Fragment {
 
     RecyclerView recyclerView;
     List<House> houseList;
+    private HouseAdapter adapter;
+    private List<FetchHousesResponse> responseList;
+    Retrofit retrofit;
 
     public FeedsFragment() {
         // Required empty public constructor
@@ -53,6 +57,8 @@ public class FeedsFragment extends Fragment {
         recyclerView = view.findViewById(R.id.myRecyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(adapter);
+
 
         //retrofit
         String houseImage, houseType, houseLocation;
@@ -65,19 +71,15 @@ public class FeedsFragment extends Fragment {
                 if (response.isSuccessful()){
                     houseList = response.body().getHouseList();
                     recyclerView.setAdapter(new HouseAdapter(getActivity(), houseList));
-                } else {
-                    toastMessage(response.body().getError());
-
                 }
+
             }
 
             @Override
             public void onFailure(Call<FetchHousesResponse> call, Throwable t) {
 
-                 toastMessage(t.getMessage());
             }
         });
-
     }
 
     private void toastMessage(String message){

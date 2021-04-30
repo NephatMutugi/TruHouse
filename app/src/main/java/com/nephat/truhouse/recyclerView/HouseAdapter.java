@@ -39,9 +39,10 @@ public class HouseAdapter extends RecyclerView.Adapter<HouseAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull HouseAdapter.ViewHolder holder, int position) {
         //Bind the data
 
+        Picasso.get().load(houseList.get(position).getImageUrl()).into(holder.mDisplayHouse);
         holder.mHouseType.setText(houseList.get(position).getHouseType());
         holder.mHouseLocation.setText(houseList.get(position).getHouseLocation());
-        Picasso.get().load(houseList.get(position).getImageUrl()).into(holder.mDisplayHouse);
+
     }
 
     @Override

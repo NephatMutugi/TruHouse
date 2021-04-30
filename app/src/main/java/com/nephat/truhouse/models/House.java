@@ -9,10 +9,10 @@ public class House {
     public House() {
     }
 
-    public House(String imageUrl, String houseType, String houseLocation) {
+    public House(String imageUrl, String houseLocation, String houseType) {
         this.imageUrl = imageUrl;
-        this.houseType = houseType;
         this.houseLocation = houseLocation;
+        this.houseType = houseType;
     }
 
     public String getImageUrl() {
