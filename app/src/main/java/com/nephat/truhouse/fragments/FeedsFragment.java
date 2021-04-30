@@ -1,6 +1,8 @@
 package com.nephat.truhouse.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +26,6 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class FeedsFragment extends Fragment {
 
@@ -32,13 +33,16 @@ public class FeedsFragment extends Fragment {
 
     RecyclerView recyclerView;
     List<House> houseList;
-    private HouseAdapter adapter;
     private List<FetchHousesResponse> responseList;
-    Retrofit retrofit;
+    private Context thisContext;
+    private HouseAdapter houseAdapter;
+
+
 
     public FeedsFragment() {
         // Required empty public constructor
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,11 +61,10 @@ public class FeedsFragment extends Fragment {
         recyclerView = view.findViewById(R.id.myRecyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(adapter);
 
 
         //retrofit
-        String houseImage, houseType, houseLocation;
+
         Call<FetchHousesResponse> call = ApiClient.getApiClient().create(ApiInterface.class).fetchHouseInfo();
 
         call.enqueue(new Callback<FetchHousesResponse>() {
@@ -69,8 +72,14 @@ public class FeedsFragment extends Fragment {
             public void onResponse(Call<FetchHousesResponse> call, Response<FetchHousesResponse> response) {
 
                 if (response.isSuccessful()){
+                    Log.d(TAG, "onResponse: "+ response.body().toString());
+
                     houseList = response.body().getHouseList();
-                    recyclerView.setAdapter(new HouseAdapter(getActivity(), houseList));
+
+                    houseAdapter = new HouseAdapter(getActivity(), houseList);
+                    recyclerView.setAdapter(houseAdapter);
+
+                    //recyclerView.setAdapter(new HouseAdapter(getContext(), houseList));
                 }
 
             }
@@ -78,6 +87,7 @@ public class FeedsFragment extends Fragment {
             @Override
             public void onFailure(Call<FetchHousesResponse> call, Throwable t) {
 
+                Log.d(TAG, "onFailure: " + t.getLocalizedMessage());
             }
         });
     }
@@ -97,6 +107,32 @@ public class FeedsFragment extends Fragment {
 
 
 /*
+
+        Call<FetchHousesResponse> call = RetrofitClient.getInstance().getApi().fetchHouseInfo();
+        call.enqueue(new Callback<FetchHousesResponse>() {
+            @Override
+            public void onResponse(Call<FetchHousesResponse> call, Response<FetchHousesResponse> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<FetchHousesResponse> call, Throwable t) {
+                toastMessage(t.getMessage());
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
     private void initRecyclerView(View view){
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
