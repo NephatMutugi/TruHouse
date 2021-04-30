@@ -1,6 +1,5 @@
 package com.nephat.truhouse.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,7 +33,6 @@ public class FeedsFragment extends Fragment {
     RecyclerView recyclerView;
     List<House> houseList;
     private List<FetchHousesResponse> responseList;
-    private Context thisContext;
     private HouseAdapter houseAdapter;
 
 
@@ -72,7 +70,7 @@ public class FeedsFragment extends Fragment {
             public void onResponse(Call<FetchHousesResponse> call, Response<FetchHousesResponse> response) {
 
                 if (response.isSuccessful()){
-                    Log.d(TAG, "onResponse: "+ response.body().toString());
+                    Log.d(TAG, "onResponse: "+ response.body().getHouseList().toString());
 
                     houseList = response.body().getHouseList();
 

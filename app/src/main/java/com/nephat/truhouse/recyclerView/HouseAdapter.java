@@ -24,6 +24,7 @@ public class HouseAdapter extends RecyclerView.Adapter<HouseAdapter.ViewHolder> 
     public HouseAdapter(Context context, List<House> houseList) {
         this.context = context;
         this.houseList = houseList;
+        notifyDataSetChanged();
     }
 
 
@@ -38,10 +39,15 @@ public class HouseAdapter extends RecyclerView.Adapter<HouseAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull HouseAdapter.ViewHolder holder, int position) {
         //Bind the data
+        House list = houseList.get(position);
+        holder.mHouseType.setText(String.valueOf(list.getHouse_type()));
+        holder.mHouseLocation.setText(String.valueOf(list.getLocation()));
+        Picasso.get().load(list.getImage_path())
+                .into(holder.mDisplayHouse);
 
-        Picasso.get().load(houseList.get(position).getImageUrl()).into(holder.mDisplayHouse);
-        holder.mHouseType.setText(houseList.get(position).getHouseType());
-        holder.mHouseLocation.setText(houseList.get(position).getHouseLocation());
+        //Picasso.get().load(houseList.get(position).getImageUrl()).into(holder.mDisplayHouse);
+        //holder.mHouseType.setText(houseList.get(position).getHouseType());
+        //holder.mHouseLocation.setText(houseList.get(position).getHouseLocation());
 
     }
 

@@ -2,40 +2,29 @@ package com.nephat.truhouse.models;
 
 public class House {
 
-    private String imageUrl;
-    private String houseType;
-    private String houseLocation;
+    private String image_path;
+    private String location;
+    private String house_type;
+
 
     public House() {
     }
 
-    public House(String imageUrl, String houseLocation, String houseType) {
-        this.imageUrl = imageUrl;
-        this.houseLocation = houseLocation;
-        this.houseType = houseType;
+    public House(String image_path, String location, String house_type) {
+        this.image_path = image_path;
+        this.location = location;
+        this.house_type = house_type;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getImage_path() {
+        return image_path;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public String getLocation() {
+        return location;
     }
 
-    public String getHouseType() {
-        return houseType;
-    }
-
-    public void setHouseType(String houseType) {
-        this.houseType = houseType;
-    }
-
-    public String getHouseLocation() {
-        return houseLocation;
-    }
-
-    public void setHouseLocation(String houseLocation) {
-        this.houseLocation = houseLocation;
+    public String getHouse_type() {
+        return house_type;
     }
 }
