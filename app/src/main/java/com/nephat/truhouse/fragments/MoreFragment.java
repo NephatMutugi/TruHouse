@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import com.nephat.truhouse.R;
 import com.nephat.truhouse.UploadHousesActivity;
 import com.nephat.truhouse.apputil.AppConfig;
+import com.nephat.truhouse.authentication.AuthAgentsActivity;
 import com.nephat.truhouse.authentication.SignInActivity;
 
 
@@ -24,7 +25,7 @@ public class MoreFragment extends Fragment {
     //Widgets
     private Button btnSignIn;
     private TextView mLogout;
-    private LinearLayout sendToUpload;
+    private LinearLayout sendToUpload, authAgents;
 
     private AppConfig appConfig;
 
@@ -40,6 +41,7 @@ public class MoreFragment extends Fragment {
         btnSignIn = view.findViewById(R.id.btn_sign_in);
         mLogout = view.findViewById(R.id.logout);
         sendToUpload = view.findViewById(R.id.linearLayoutPreQualified);
+        authAgents = view.findViewById(R.id.linearLayoutMortgageCalc);
 
         appConfig = new AppConfig(getActivity().getApplicationContext());
 
@@ -47,6 +49,14 @@ public class MoreFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), UploadHousesActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        authAgents.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), AuthAgentsActivity.class);
                 startActivity(intent);
             }
         });
