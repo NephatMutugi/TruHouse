@@ -6,9 +6,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
+import android.util.SparseArray;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -23,7 +26,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.gms.vision.Frame;
+import com.google.android.gms.vision.text.TextBlock;
+import com.google.android.gms.vision.text.TextRecognizer;
 import com.nephat.truhouse.R;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 public class AuthAgentsActivity extends AppCompatActivity {
 
@@ -57,6 +65,8 @@ public class AuthAgentsActivity extends AppCompatActivity {
         mBtnVerifyAgent = findViewById(R.id.buttonSubmit);
         mLicenceImage = findViewById(R.id.licenceImageView);
 
+        hideSoftKeyboard();
+
         //Camera permission
         cameraPermission = new String[]{Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE};
         //Storage permission
@@ -66,7 +76,7 @@ public class AuthAgentsActivity extends AppCompatActivity {
         mBtnSelectImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                showImageImportDialog();
             }
         });
 
@@ -158,8 +168,6 @@ public class AuthAgentsActivity extends AppCompatActivity {
     }
 
     //Handle permission results
-
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode){
@@ -197,20 +205,68 @@ public class AuthAgentsActivity extends AppCompatActivity {
     }
 
     //Handle image result
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK){
             //Get image from gallery
-            if (resultCode == PICK_IMAGE_FROM_GALLERY_REQUEST){
+            if (requestCode == PICK_IMAGE_FROM_GALLERY_REQUEST){
+                CropImage.activity(data.getData())
+                        .setGuidelines(CropImageView.Guidelines.ON)
+                        .start(this);
 
             }
             //Get image from camera
-            if (requestCode == CAMERA_REQUEST_CODE){
+            if (requestCode == PICK_IMAGE_FROM_CAMERA_REQUEST){
+                CropImage.activity(image_uri)
+                        .setGuidelines(CropImageView.Guidelines.ON)
+                        .start(this);
+            }
+        }
+        //Get Cropped Image
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK){
+                Uri resultUri = result.getUri();
+                //Set Image to image view
+                mLicenceImage.setImageURI(resultUri);
 
+                //Get drawable bitmap for text recognition
+                BitmapDrawable bitmapDrawable = (BitmapDrawable)mLicenceImage.getDrawable();
+                Bitmap bitmap = bitmapDrawable.getBitmap();
+                TextRecognizer recognizer = new TextRecognizer.Builder(getApplicationContext()).build();
+
+                if (!recognizer.isOperational()){
+                    toastMessage("Error");
+                }
+                else {
+                    Frame frame = new Frame.Builder().setBitmap(bitmap).build();
+                    SparseArray<TextBlock> items = recognizer.detect(frame);
+                    StringBuilder stringBuilder = new StringBuilder();
+                    //Get all the text from string builder until there is no more text
+                    /*for (int i=0; i<items.size(); i++){
+                        TextBlock myItem = items.valueAt(i);
+                        stringBuilder.append(myItem.getValue());
+                        stringBuilder.append("/n");
+
+                    } */
+                    int i = items.size();
+                    TextBlock myItem = items.valueAt(4);
+                    stringBuilder.append(myItem.getValue());
+                    String toText = stringBuilder.toString();
+                    String number  = toText.replaceAll("[^0-9]", "");
+
+                    //Set Text to edit text
+                    //mResults.setText(stringBuilder.toString());
+                    mResults.setText(number);
+                    Log.d(TAG, "onActivityResult: " + number);
+                }
+            }
+
+            else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE){
+                Exception error = result.getError();
+                toastMessage(error.getMessage());
             }
         }
 
