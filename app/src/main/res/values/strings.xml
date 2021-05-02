@@ -35,4 +35,11 @@
     <string name="pref_name_of_user">nameofuser</string>
     <string name="remember_me">Remember Me</string>
     <string name="contact_for_estimate">Contact for estimate</string>
+    <string name="housing_agents">Are you a housing agent?</string>
+    <string name="enter_registration_number">Enter registration number</string>
+    <string name="login_as_agent">Login as agent</string>
+    <string name="not_an_agent">Not an agent? Back to login...</string>
+    <string name="phone_number_hint">Phone Number</string>
+    <string name="location_hint">Location in the country</string>
+    <string name="reg_agent_text">Your registration number is:</string>
 </resources>

@@ -19,8 +19,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Register as Housing agent"
+        android:textColor="@color/blue"
         android:textStyle="bold"
-        android:textSize="20sp"
+        android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -32,14 +33,15 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:padding="4dp"
-            android:text="Registration Number"
+            android:text="Registration Number:"
+            android:textStyle="bold"
             android:textColor="@color/blue"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/licenceImageView" />
 
         <TextView
-            android:id="@+id/editTextRegNumber"
+            android:id="@+id/textRegNumber"
             android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
@@ -76,19 +78,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
-    <ImageView
-        android:id="@+id/licenceImageView"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:background="@drawable/rounded_text"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSelectLicence"
-        tools:srcCompat="@tools:sample/avatars" />
+        <ImageView
+            android:id="@+id/licenceImageView"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttonSelectLicence"
+            tools:srcCompat="@tools:sample/avatars" />
 
         <Button
-            android:id="@+id/buttonSubmit"
+            android:id="@+id/buttonVerify"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"

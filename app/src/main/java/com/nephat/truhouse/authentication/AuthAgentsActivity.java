@@ -49,6 +49,8 @@ public class AuthAgentsActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_FROM_GALLERY_REQUEST = 1000;
     private static final int PICK_IMAGE_FROM_CAMERA_REQUEST = 1001;
 
+    private String regNumber;
+
     String[] cameraPermission;
     String[] storagePermission;
 
@@ -61,9 +63,9 @@ public class AuthAgentsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth_agents);
 
-        mRegNo = findViewById(R.id.editTextRegNumber);
+        mRegNo = findViewById(R.id.textRegNumber);
         mBtnSelectImage = findViewById(R.id.buttonSelectLicence);
-        mBtnVerifyAgent = findViewById(R.id.buttonSubmit);
+        mBtnVerifyAgent = findViewById(R.id.buttonVerify);
         mLicenceImage = findViewById(R.id.licenceImageView);
 
         hideSoftKeyboard();
@@ -81,7 +83,30 @@ public class AuthAgentsActivity extends AppCompatActivity {
             }
         });
 
+        mBtnVerifyAgent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AuthAgentsActivity.this, VerifyAgentActivity.class);
+                intent.putExtra("REG_NUMBER", regNumber);
+                startActivity(intent);
+            }
+        });
     }
+
+    private void verifyRegistrationNumber(){
+        String registrationNo;
+        registrationNo = String.valueOf(mRegNo);
+        if (!registrationNo.isEmpty()){
+
+        }
+
+        Intent intent = new Intent(AuthAgentsActivity.this, VerifyAgentActivity.class);
+        intent.putExtra("REG_NUMBER", regNumber);
+        startActivity(intent);
+
+    }
+
+
 
     private void showImageImportDialog(){
         //Items to display on dialog
@@ -257,6 +282,7 @@ public class AuthAgentsActivity extends AppCompatActivity {
                     stringBuilder.append(myItem.getValue());
                     String toText = stringBuilder.toString();
                     String number  = toText.replaceAll("[^0-9]", "");
+                    regNumber = number;
 
                     //Set Text to edit text
                     //mRegNo.setText(stringBuilder.toString());

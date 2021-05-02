@@ -28,7 +28,7 @@ public class SignInActivity extends AppCompatActivity {
     private static final String TAG = "SignInActivity";
     private static final String URL_LOGIN = "http://192.168.100.2/realEstate/login.php";
 
-    private Button mSignInBtn;
+    private Button mSignInBtn, mAgentLogin;
     private TextInputEditText mSignInEmail, mSignInPassword;
     private TextView mForgotPass, mLinkRegister;
 
@@ -44,6 +44,7 @@ public class SignInActivity extends AppCompatActivity {
         mSignInEmail = findViewById(R.id.sign_in_email);
         mSignInPassword = findViewById(R.id.sign_in_pass);
         mSignInBtn = findViewById(R.id.sign_in_btn);
+        mAgentLogin = findViewById(R.id.btnEnterAsAgent);
         mLinkRegister = findViewById(R.id.link_reg_text);
 
         appConfig = new AppConfig(this);
@@ -60,6 +61,15 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 performLogin();
+            }
+        });
+
+        mAgentLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SignInActivity.this, LoginAsAgentActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
 

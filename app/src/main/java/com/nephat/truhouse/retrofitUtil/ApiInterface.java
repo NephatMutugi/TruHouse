@@ -24,6 +24,11 @@ public interface ApiInterface {
 
 
    @FormUrlEncoded
+   @POST("updateAgent.php")
+   Call<ApiResponse> performAgentUpdate();
+
+
+   @FormUrlEncoded
    @POST("upload.php")
    Call<UploadModel> uploadImage(@Field("title") String title, @Field("location") String location, @Field("price") String price,
                                  @Field("house_type") String house_type, @Field("contact") String contact,
