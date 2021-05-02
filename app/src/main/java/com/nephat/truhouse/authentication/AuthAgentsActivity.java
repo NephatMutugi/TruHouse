@@ -17,6 +17,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -37,7 +38,8 @@ public class AuthAgentsActivity extends AppCompatActivity {
 
     private static final String TAG = "AuthAgentsActivity";
 
-    private EditText mRegNo, mResults;
+    private EditText mResults;
+    private TextView  mRegNo;
     private Button mBtnSelectImage, mBtnVerifyAgent;
     private ImageView mLicenceImage;
 
@@ -47,8 +49,8 @@ public class AuthAgentsActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_FROM_GALLERY_REQUEST = 1000;
     private static final int PICK_IMAGE_FROM_CAMERA_REQUEST = 1001;
 
-    String cameraPermission[];
-    String storagePermission[];
+    String[] cameraPermission;
+    String[] storagePermission;
 
     Uri image_uri;
 
@@ -60,7 +62,6 @@ public class AuthAgentsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_auth_agents);
 
         mRegNo = findViewById(R.id.editTextRegNumber);
-        mResults = findViewById(R.id.editTextResult);
         mBtnSelectImage = findViewById(R.id.buttonSelectLicence);
         mBtnVerifyAgent = findViewById(R.id.buttonSubmit);
         mLicenceImage = findViewById(R.id.licenceImageView);
@@ -258,8 +259,8 @@ public class AuthAgentsActivity extends AppCompatActivity {
                     String number  = toText.replaceAll("[^0-9]", "");
 
                     //Set Text to edit text
-                    //mResults.setText(stringBuilder.toString());
-                    mResults.setText(number);
+                    //mRegNo.setText(stringBuilder.toString());
+                     mRegNo.setText(number);
                     Log.d(TAG, "onActivityResult: " + number);
                 }
             }
