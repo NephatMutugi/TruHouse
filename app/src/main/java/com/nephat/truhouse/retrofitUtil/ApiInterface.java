@@ -22,10 +22,15 @@ public interface ApiInterface {
    @POST("login.php")
     Call<ApiResponse> performUserLogin(@Field("email") String email, @Field("password") String password);
 
+    @FormUrlEncoded
+    @POST("loginAgent.php")
+    Call<ApiResponse> performAgentLogin(@Field("reg_no") String reg_no, @Field("password") String password);
+
 
    @FormUrlEncoded
    @POST("updateAgent.php")
-   Call<ApiResponse> performAgentUpdate();
+   Call<ApiResponse> performAgentUpdate(@Field("reg_no") String reg_no, @Field("phone") String phone, @Field("email") String email,
+                                        @Field("locality") String locality, @Field("password") String password);
 
 
    @FormUrlEncoded

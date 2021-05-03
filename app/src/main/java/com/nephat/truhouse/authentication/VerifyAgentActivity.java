@@ -2,6 +2,8 @@ package com.nephat.truhouse.authentication;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
@@ -11,6 +13,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.nephat.truhouse.R;
+import com.nephat.truhouse.models.ApiResponse;
+import com.nephat.truhouse.retrofitUtil.ApiClient;
+import com.nephat.truhouse.retrofitUtil.ApiInterface;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class VerifyAgentActivity extends AppCompatActivity {
 
@@ -42,6 +51,13 @@ public class VerifyAgentActivity extends AppCompatActivity {
         regNumber = intent.getStringExtra("REG_NUMBER");
         textWelcome.setText(regNumber);
 
+        mBtnVerify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                performVerification();
+            }
+        });
+
 
 
     }
@@ -56,12 +72,70 @@ public class VerifyAgentActivity extends AppCompatActivity {
         password = String.valueOf(mPassword.getText());
         confirm_password = String.valueOf(mConfirmPass.getText());
 
+        if (TextUtils.isEmpty(phone)){
+            mPhone.setError("This field is mandatory");
+            return;
+        }
+        if (TextUtils.isEmpty(email)){
+            mEmail.setError("This field is mandatory");
+            return;
+        }
+        if (TextUtils.isEmpty(locality)){
+            mLocality.setError("This field is mandatory");
+            return;
+        }
+        if (TextUtils.isEmpty(password)){
+            mPassword.setError("Password is required");
+            return;
+        }
+        if (password.length() < 4){
+            mPassword.setError("Password should be 4 or more characters");
+            return;
+        } if (!TextUtils.equals(password, confirm_password)) {
+            mConfirmPass.setError("Passwords do not match");
+        } else {
+
+            Call<ApiResponse> call = ApiClient.getApiClient().create(ApiInterface.class)
+                    .performAgentUpdate(reg_no,phone,email,locality,password);
+            call.enqueue(new Callback<ApiResponse>() {
+                @Override
+                public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                    if (response.code() == 200){
+                        if (response.body().getStatus().equals("ok")){
+                            if (response.body().getResultCode() ==1){
+                                toastMessage("Registration was successful");
+
+                                //TODO send to login as agent
+                                Intent intent = new Intent(VerifyAgentActivity.this,LoginAsAgentActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }else {
+
+                                toastMessage("User already exists");
+
+                            }
+                        } else {
+                            toastMessage("Details already updated");
+                        }
+                    } else {
+                        toastMessage("Something went wrong...");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ApiResponse> call, Throwable t) {
+
+                }
+            });
+
+        }
+
+
     }
 
-
-
-
-
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 
 
     private void toastMessage(String message) {

@@ -86,23 +86,23 @@ public class AuthAgentsActivity extends AppCompatActivity {
         mBtnVerifyAgent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AuthAgentsActivity.this, VerifyAgentActivity.class);
-                intent.putExtra("REG_NUMBER", regNumber);
-                startActivity(intent);
+                verifyRegistrationNumber();
             }
         });
     }
+
+    //TODO Ensure registration number is set before proceeding to the next activity
 
     private void verifyRegistrationNumber(){
         String registrationNo;
         registrationNo = String.valueOf(mRegNo);
         if (!registrationNo.isEmpty()){
-
+            Intent intent = new Intent(AuthAgentsActivity.this, VerifyAgentActivity.class);
+            intent.putExtra("REG_NUMBER", regNumber);
+            startActivity(intent);
+        } else{
+            toastMessage("No valid registration number found");
         }
-
-        Intent intent = new Intent(AuthAgentsActivity.this, VerifyAgentActivity.class);
-        intent.putExtra("REG_NUMBER", regNumber);
-        startActivity(intent);
 
     }
 

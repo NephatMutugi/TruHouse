@@ -11,6 +11,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.nephat.truhouse.R;
+import com.nephat.truhouse.models.ApiResponse;
+import com.nephat.truhouse.retrofitUtil.ApiClient;
+import com.nephat.truhouse.retrofitUtil.ApiInterface;
+
+import retrofit2.Call;
 
 public class LoginAsAgentActivity extends AppCompatActivity {
 
@@ -53,6 +58,16 @@ public class LoginAsAgentActivity extends AppCompatActivity {
     }
 
     private void performAgentLogin(){
+
+        String loginRegNo, loginPassword;
+        loginRegNo=String.valueOf(mRegistrationNo.getText());
+        loginPassword=String.valueOf(mPassword.getText());
+
+        if (!loginRegNo.isEmpty()||loginPassword.isEmpty()){
+
+            Call<ApiResponse> call= ApiClient.getApiClient().create(ApiInterface.class).performAgentLogin(loginRegNo,loginPassword);
+
+        }
 
     }
 
