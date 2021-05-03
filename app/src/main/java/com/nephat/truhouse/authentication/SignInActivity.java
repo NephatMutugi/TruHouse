@@ -91,7 +91,7 @@ public class SignInActivity extends AppCompatActivity {
         loginEmail = String.valueOf(mSignInEmail.getText());
         loginPassword = String.valueOf(mSignInPassword.getText());
 
-        if (!loginEmail.isEmpty() || !loginPassword.isEmpty()){
+        if (!loginEmail.isEmpty() && !loginPassword.isEmpty()){
 
             Call<ApiResponse> call = ApiClient.getApiClient().create(ApiInterface.class).performUserLogin(loginEmail, loginPassword);
             call.enqueue(new Callback<ApiResponse>() {

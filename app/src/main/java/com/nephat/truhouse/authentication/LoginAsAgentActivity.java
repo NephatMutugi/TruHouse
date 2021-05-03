@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,6 +17,8 @@ import com.nephat.truhouse.retrofitUtil.ApiClient;
 import com.nephat.truhouse.retrofitUtil.ApiInterface;
 
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginAsAgentActivity extends AppCompatActivity {
 
@@ -51,7 +54,7 @@ public class LoginAsAgentActivity extends AppCompatActivity {
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                performAgentLogin();
             }
         });
 
@@ -63,10 +66,37 @@ public class LoginAsAgentActivity extends AppCompatActivity {
         loginRegNo=String.valueOf(mRegistrationNo.getText());
         loginPassword=String.valueOf(mPassword.getText());
 
-        if (!loginRegNo.isEmpty()||loginPassword.isEmpty()){
+        if (!loginRegNo.isEmpty() && !loginPassword.isEmpty()){
 
             Call<ApiResponse> call= ApiClient.getApiClient().create(ApiInterface.class).performAgentLogin(loginRegNo,loginPassword);
+            call.enqueue(new Callback<ApiResponse>() {
+                @Override
+                public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                    if (response.code()==200){
+                        if (response.body().getStatus().equals("ok")){
+                            if (response.body().getResultCode()==1){
+                                String name = response.body().getName();
+                                toastMessage(name+ ": Logged in Successfully");
+                            } else {
+                                toastMessage("Login Failed");
+                            }
+                        } else {
+                            toastMessage("Something went wrong");
+                        }
+                    } else{
+                        toastMessage("Something went wrong");
+                    }
+                }
 
+                @Override
+                public void onFailure(Call<ApiResponse> call, Throwable t) {
+
+                }
+            });
+        } else{
+            toastMessage("Fields cannot be empty");
+            mRegistrationNo.setError("Please insert registration number");
+            mPassword.setError("Please insert password");
         }
 
     }
@@ -74,5 +104,9 @@ public class LoginAsAgentActivity extends AppCompatActivity {
     public void checkBoxAgentClicked(View view){
 
         isRememberAgentLogin = ((CheckBox) view).isChecked();
+    }
+
+    private void toastMessage(String message) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
 }
