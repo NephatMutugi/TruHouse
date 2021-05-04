@@ -42,7 +42,7 @@ public class HouseAdapter extends RecyclerView.Adapter<HouseAdapter.ViewHolder> 
         House list = houseList.get(position);
         holder.mHouseType.setText(String.valueOf(list.getHouse_type()));
         holder.mHouseLocation.setText(String.valueOf(list.getLocation()));
-        Picasso.get().load(list.getImage_path())
+        Picasso.get().load("http://192.168.100.2/realEstate/" +list.getImage_path())
                 .into(holder.mDisplayHouse);
 
         //Picasso.get().load(houseList.get(position).getImageUrl()).into(holder.mDisplayHouse);

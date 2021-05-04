@@ -24,7 +24,13 @@
             android:name=".authentication.LoginAsAgentActivity"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity android:name=".authentication.AuthAgentsActivity" />
-        <activity android:name=".UploadHousesActivity" />
+        <activity android:name=".UploadHousesActivity"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND_MULTIPLE"/>
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".authentication.RegisterActivity"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />

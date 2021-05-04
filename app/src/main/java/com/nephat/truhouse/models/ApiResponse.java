@@ -16,6 +16,12 @@ public class ApiResponse {
     @SerializedName("name")
     private String name;
 
+    @SerializedName("id")
+    private String id;
+
+    @SerializedName("reg_no")
+    private String reg_no;
+
     public String getStatus() {
         return status;
     }
@@ -26,5 +32,13 @@ public class ApiResponse {
 
     public String getName() {
         return name;
+    }
+
+    public String getId(){
+        return id;
+    }
+
+    public String getReg_no(){
+        return reg_no;
     }
 }

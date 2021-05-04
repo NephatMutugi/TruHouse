@@ -8,11 +8,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -20,12 +22,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.nephat.truhouse.models.UploadModel;
+import com.google.android.material.textfield.TextInputEditText;
+import com.nephat.truhouse.authentication.LoginAsAgentActivity;
+import com.nephat.truhouse.models.ApiResponse;
 import com.nephat.truhouse.retrofitUtil.ApiClient;
 import com.nephat.truhouse.retrofitUtil.ApiInterface;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,14 +43,21 @@ public class UploadHousesActivity extends AppCompatActivity {
     private static final String TAG = "UploadHousesActivity";
     private static final String BASE_URL = "http://192.168.100.2/realEstate/";
     private static final int MY_PERMISSIONS_REQUEST = 100;
-    private int PICK_IMAGE_FROM_GALLERY_REQUEST = 1;
+    private final int PICK_IMAGE_FROM_GALLERY_REQUEST = 1;
+    private final int PICK_MULTIPLE_REQUEST = 2;
     private String houseType, housePrice, houseLocation, houseContact, houseDescription, houseName;
+    private ArrayList<Uri> imageUris;
+    int position = 0;
+    List<String> imagesEncodedList;
 
-    private Bitmap bitmap;
+    private Bitmap bitmap, bitmap2, bitmap3;
     boolean check = true;
+    String name, id, regNo;
 
-    private EditText mType, mPrice, mLocation, mContact, mDescription, mImageName;
-    private ImageView mHouseImage;
+    private TextView mAgentName;
+    private TextInputEditText mType, mPrice, mLocation, mContact, mDescription, mHouseTitle;
+    private EditText mImageName, mImageName2, mImageName3;
+    private ImageView mHouseImage, mHouseImage2, mHouseImage3;
     private Button mSaveBtn, mSelectImageBtn;
 
     private Retrofit retrofit = ApiClient.getApiClient();
@@ -55,16 +68,39 @@ public class UploadHousesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_houses);
 
+        //Name of agent
+        mAgentName = findViewById(R.id.textName);
+
+        //Image views
         mHouseImage = findViewById(R.id.houseImage);
+        mHouseImage2 = findViewById(R.id.houseImage2);
+        mHouseImage3 = findViewById(R.id.houseImage3);
+
+        //Text input fields
+        mHouseTitle = findViewById(R.id.editHouseName);
         mType = findViewById(R.id.editHouseType);
         mPrice = findViewById(R.id.editPrice);
         mLocation = findViewById(R.id.editLocation);
         mContact = findViewById(R.id.editContact);
         mDescription = findViewById(R.id.editDescription);
+
+        //Edit text Image names
         mImageName = findViewById(R.id.imageTitle);
+        mImageName2 = findViewById(R.id.imageTitle2);
+        mImageName3 = findViewById(R.id.imageTitle3);
+
         mSaveBtn = findViewById(R.id.btnSubmit);
         mSelectImageBtn = findViewById(R.id.btnSelectImage);
         hideSoftKeyboard();
+
+        Intent intent = getIntent();
+        name = intent.getStringExtra("NAME");
+        id = intent.getStringExtra("ID");
+        regNo = intent.getStringExtra("REG");
+        mAgentName.setText(name);
+
+        imageUris = new ArrayList<>();
+
 
 
         if (ContextCompat.checkSelfPermission(UploadHousesActivity.this,
@@ -78,15 +114,18 @@ public class UploadHousesActivity extends AppCompatActivity {
 
         mSelectImageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) {/*
                 Intent intent = new Intent();
                 intent.setType("image/*");
+                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(
                         intent, "Select Image From Gallery"),
-                        PICK_IMAGE_FROM_GALLERY_REQUEST);
+                        PICK_IMAGE_FROM_GALLERY_REQUEST); */
+                pickImagesIntent();
             }
         });
+
 
         mSaveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,34 +137,62 @@ public class UploadHousesActivity extends AppCompatActivity {
 
     }
 
+    private void pickImagesIntent(){
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Images"), PICK_IMAGE_FROM_GALLERY_REQUEST);
+    }
+
     private void uploadImage(){
         String image = imageToString();
-        houseName = String.valueOf(mImageName.getText());
+        String image2 = imageToString2();
+        String image3 = imageToString3();
+        String agent_fk = regNo;
+
+        String imageName, imageName2, imageName3;
+
+        houseName = String.valueOf(mHouseTitle.getText());
         houseType = String.valueOf(mType.getText());
         housePrice = String.valueOf(mPrice.getText());
         houseLocation = String.valueOf(mLocation.getText());
         houseContact = String.valueOf(mContact.getText());
         houseDescription = String.valueOf(mDescription.getText());
 
-        ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
-        Call<UploadModel> call = apiInterface.uploadImage(houseName, houseLocation, housePrice,
-                houseType, houseContact, houseDescription, image );
+        imageName = String.valueOf(mImageName.getText());
+        imageName2 = String.valueOf(mImageName2.getText());
+        imageName3 = String.valueOf(mImageName3.getText());
 
-        call.enqueue(new Callback<UploadModel>() {
+
+
+        ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
+        Call<ApiResponse> call = apiInterface.uploadImage(houseName, houseLocation, housePrice,
+                houseType, houseContact, houseDescription, image, image2, image3, agent_fk );
+
+        call.enqueue(new Callback<ApiResponse>() {
             @Override
-            public void onResponse(Call<UploadModel> call, Response<UploadModel> response) {
-                UploadModel model = response.body();
-                if (model != null) {
-                    toastMessage(model.getResponse());
-                } else {
-                    toastMessage("Image not uploaded");
+            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                toastMessage("Image uploaded");
+                if (response.code()==200){
+                    toastMessage("House was registered successfully");
+                    if (response.body().getStatus().equals("ok")){
+                        if (response.body().getResultCode()==1){
+                            toastMessage("House was registered successfully");
+                        } else {
+                            toastMessage("Property already uploaded");
+                        }
+
+                    } else {
+                        toastMessage("Something went wrong");
+                    }
+                } else{
+                    toastMessage("Something went wrong...");
                 }
-                //mHouseImage.setVisibility(View.VISIBLE);
-               mImageName.setText("");
             }
 
             @Override
-            public void onFailure(Call<UploadModel> call, Throwable t) {
+            public void onFailure(Call<ApiResponse> call, Throwable t) {
 
             }
         });
@@ -139,17 +206,45 @@ public class UploadHousesActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == PICK_IMAGE_FROM_GALLERY_REQUEST && resultCode == RESULT_OK && data != null ){
-            Uri path = data.getData();
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), path);
-                mHouseImage.setImageBitmap(bitmap);
-                mHouseImage.setVisibility(View.VISIBLE);
-            } catch (IOException e){
-                e.printStackTrace();
+
+            if (data.getClipData() != null){
+                //Picked multiple images
+
+                int count = data.getClipData().getItemCount();
+                for (int i = 0; i < 3; i++){
+                    //Get image uri at specific index
+                    Uri imageUri = data.getClipData().getItemAt(i).getUri();
+                    imageUris.add(imageUri);
+                }
+
+                try {
+                    bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUris.get(0));
+                    bitmap2 = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUris.get(1));
+                    bitmap3 = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUris.get(2));
+
+                    mHouseImage.setImageBitmap(bitmap);
+                    mHouseImage2.setImageBitmap(bitmap2);
+                    mHouseImage3.setImageBitmap(bitmap3);
+
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                //mHouseImage.setImageURI(imageUris.get(0));
+                //mHouseImage2.setImageURI(imageUris.get(1));
+                //mHouseImage3.setImageURI(imageUris.get(2));
+                Log.d(TAG, "onActivityResult: " + bitmap);
+                Log.d(TAG, "onActivityResult: " + bitmap2);
+                Log.d(TAG, "onActivityResult: " + bitmap3);
             }
+
         }
 
     }
+
+
+
 
 
     private String imageToString(){
@@ -161,8 +256,32 @@ public class UploadHousesActivity extends AppCompatActivity {
 
         return convertImage;
     }
+    private String imageToString2(){
+        ByteArrayOutputStream byteArrayOutputStream;
+        byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap2.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        byte[] imageByte = byteArrayOutputStream.toByteArray();
+        String convertImage2 = Base64.encodeToString(imageByte, Base64.DEFAULT);
 
+        return convertImage2;
+    }
 
+    private String imageToString3(){
+        ByteArrayOutputStream byteArrayOutputStream;
+        byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap3.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        byte[] imageByte = byteArrayOutputStream.toByteArray();
+        String convertImage3 = Base64.encodeToString(imageByte, Base64.DEFAULT);
+
+        return convertImage3;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(UploadHousesActivity.this, LoginAsAgentActivity.class);
+        startActivity(intent);
+    }
 
 
     private void toastMessage(String message) {
@@ -176,3 +295,34 @@ public class UploadHousesActivity extends AppCompatActivity {
     }
 
 }
+
+
+/*
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_FROM_GALLERY_REQUEST && resultCode == RESULT_OK && data != null ){
+            Uri path = data.getData();
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), path);
+                mHouseImage.setImageBitmap(bitmap);
+                mHouseImage.setVisibility(View.VISIBLE);
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+        } else if(requestCode == PICK_MULTIPLE_REQUEST && resultCode == RESULT_OK && data != null){
+            ClipData clipData = data.getClipData();
+            if (clipData != null){
+                mHouseImage.setImageURI(clipData.getItemAt(0).getUri());
+                mHouseImage2.setImageURI(clipData.getItemAt(1).getUri());
+                mHouseImage3.setImageURI(clipData.getItemAt(2).getUri());
+
+                ClipData.Item item = clipData.getItemAt(0);
+                ClipData.Item item2 = clipData.getItemAt(1);
+                ClipData.Item item3 = clipData.getItemAt(2);
+                            }
+        }
+
+    }
+    */

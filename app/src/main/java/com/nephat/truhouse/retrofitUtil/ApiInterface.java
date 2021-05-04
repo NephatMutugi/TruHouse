@@ -2,7 +2,6 @@ package com.nephat.truhouse.retrofitUtil;
 
 import com.nephat.truhouse.models.ApiResponse;
 import com.nephat.truhouse.models.FetchHousesResponse;
-import com.nephat.truhouse.models.UploadModel;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -35,9 +34,11 @@ public interface ApiInterface {
 
    @FormUrlEncoded
    @POST("upload.php")
-   Call<UploadModel> uploadImage(@Field("title") String title, @Field("location") String location, @Field("price") String price,
+   Call<ApiResponse> uploadImage(@Field("title") String title, @Field("location") String location, @Field("price") String price,
                                  @Field("house_type") String house_type, @Field("contact") String contact,
-                                 @Field("description") String description, @Field("image") String image);
+                                 @Field("description") String description, @Field("image") String image,
+                                 @Field("image2") String image2, @Field("image3") String image3,
+                                 @Field("registered_agents_fk") String registered_agents_fk);
 
 
     @GET("fetchUsers.php")

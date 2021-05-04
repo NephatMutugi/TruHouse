@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.nephat.truhouse.R;
+import com.nephat.truhouse.UploadHousesActivity;
 import com.nephat.truhouse.models.ApiResponse;
 import com.nephat.truhouse.retrofitUtil.ApiClient;
 import com.nephat.truhouse.retrofitUtil.ApiInterface;
@@ -76,7 +77,16 @@ public class LoginAsAgentActivity extends AppCompatActivity {
                         if (response.body().getStatus().equals("ok")){
                             if (response.body().getResultCode()==1){
                                 String name = response.body().getName();
-                                toastMessage(name+ ": Logged in Successfully");
+                                String id = response.body().getId();
+                                String reg_no = response.body().getReg_no();
+                                toastMessage(name+ ": Logged in Successfully" + " Your reg no is "+reg_no);
+                                Intent intent = new Intent(LoginAsAgentActivity.this, UploadHousesActivity.class);
+                                intent.putExtra("NAME", name);
+                                intent.putExtra("ID", id);
+                                intent.putExtra("REG", reg_no);
+                                startActivity(intent);
+                                finish();
+
                             } else {
                                 toastMessage("Login Failed");
                             }
@@ -99,6 +109,13 @@ public class LoginAsAgentActivity extends AppCompatActivity {
             mPassword.setError("Please insert password");
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(LoginAsAgentActivity.this, SignInActivity.class);
+        startActivity(intent);
     }
 
     public void checkBoxAgentClicked(View view){
