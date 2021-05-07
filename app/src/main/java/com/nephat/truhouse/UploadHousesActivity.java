@@ -168,7 +168,7 @@ public class UploadHousesActivity extends AppCompatActivity {
 
         ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
         Call<ApiResponse> call = apiInterface.uploadImage(houseName, houseLocation, housePrice,
-                houseType, houseContact, houseDescription, image, image2, image3, agent_fk );
+                houseType, houseContact, houseDescription, image, image2, image3, agent_fk, imageName, imageName2, imageName3 );
 
         call.enqueue(new Callback<ApiResponse>() {
             @Override

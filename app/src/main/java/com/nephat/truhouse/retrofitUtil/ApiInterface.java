@@ -38,7 +38,8 @@ public interface ApiInterface {
                                  @Field("house_type") String house_type, @Field("contact") String contact,
                                  @Field("description") String description, @Field("image") String image,
                                  @Field("image2") String image2, @Field("image3") String image3,
-                                 @Field("registered_agents_fk") String registered_agents_fk);
+                                 @Field("registered_agents_fk") String registered_agents_fk, @Field("image_name") String image_name,
+                                 @Field("image_name2") String image_name2, @Field("image_name3") String image_name3);
 
 
     @GET("fetchUsers.php")

@@ -21,4 +21,8 @@ public class ApiClient {
         return retrofit;
     }
 
+    public ApiInterface getApi(){
+        return retrofit.create(ApiInterface.class);
+    }
+
 }
