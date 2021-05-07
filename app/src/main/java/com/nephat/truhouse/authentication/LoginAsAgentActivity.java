@@ -11,8 +11,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.nephat.truhouse.ChooseActionActivity;
 import com.nephat.truhouse.R;
-import com.nephat.truhouse.UploadHousesActivity;
 import com.nephat.truhouse.models.ApiResponse;
 import com.nephat.truhouse.retrofitUtil.ApiClient;
 import com.nephat.truhouse.retrofitUtil.ApiInterface;
@@ -80,7 +80,7 @@ public class LoginAsAgentActivity extends AppCompatActivity {
                                 String id = response.body().getId();
                                 String reg_no = response.body().getReg_no();
                                 toastMessage(name+ ": Logged in Successfully" + " Your reg no is "+reg_no);
-                                Intent intent = new Intent(LoginAsAgentActivity.this, UploadHousesActivity.class);
+                                Intent intent = new Intent(LoginAsAgentActivity.this, ChooseActionActivity.class);
                                 intent.putExtra("NAME", name);
                                 intent.putExtra("ID", id);
                                 intent.putExtra("REG", reg_no);

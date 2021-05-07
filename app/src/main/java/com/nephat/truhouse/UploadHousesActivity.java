@@ -114,14 +114,7 @@ public class UploadHousesActivity extends AppCompatActivity {
 
         mSelectImageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {/*
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(
-                        intent, "Select Image From Gallery"),
-                        PICK_IMAGE_FROM_GALLERY_REQUEST); */
+            public void onClick(View v) {
                 pickImagesIntent();
             }
         });
@@ -130,8 +123,13 @@ public class UploadHousesActivity extends AppCompatActivity {
         mSaveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 uploadImage();
+                Intent intent = new Intent(UploadHousesActivity.this, ChooseActionActivity.class);
+                intent.putExtra("NAME", name);
+                intent.putExtra("ID", id);
+                intent.putExtra("REG", regNo);
+                startActivity(intent);
+                finish();
             }
         });
 
@@ -173,12 +171,12 @@ public class UploadHousesActivity extends AppCompatActivity {
         call.enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
-                toastMessage("Image uploaded");
                 if (response.code()==200){
-                    toastMessage("House was registered successfully");
                     if (response.body().getStatus().equals("ok")){
                         if (response.body().getResultCode()==1){
                             toastMessage("House was registered successfully");
+
+
                         } else {
                             toastMessage("Property already uploaded");
                         }
