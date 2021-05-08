@@ -64,7 +64,7 @@ public class AgentHouseAdapter extends RecyclerView.Adapter<AgentHouseAdapter.Ag
             mHouseTitle = itemView.findViewById(R.id.textHouseTitle1);
             mHouseType = itemView.findViewById(R.id.textHouseType1);
             mHouseLocation = itemView.findViewById(R.id.textHouseLocation1);
-            mDelete = itemView.findViewById(R.id.textDelete);
+           // mDelete = itemView.findViewById(R.id.textDelete);
             mDisplayHouse = itemView.findViewById(R.id.displayImage1);
         }
     }

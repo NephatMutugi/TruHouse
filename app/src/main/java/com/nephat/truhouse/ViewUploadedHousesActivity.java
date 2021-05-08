@@ -3,6 +3,7 @@ package com.nephat.truhouse;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -29,7 +30,10 @@ public class ViewUploadedHousesActivity extends AppCompatActivity {
     private List<FetchAgentHouseResponse> agentHouseResponseList;
     private AgentHouseAdapter agentHouseAdapter;
 
+    private TextView mAgentName;
+
     String name, id, regNo;
+    String dispName, dispReg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,8 @@ public class ViewUploadedHousesActivity extends AppCompatActivity {
         name = intent.getStringExtra("NAME");
         id = intent.getStringExtra("ID");
         regNo = intent.getStringExtra("REG");
+
+
 
         recyclerView = findViewById(R.id.myRecyclerView1);
         recyclerView.setHasFixedSize(true);
@@ -65,5 +71,10 @@ public class ViewUploadedHousesActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

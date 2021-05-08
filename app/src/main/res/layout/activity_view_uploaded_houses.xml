@@ -7,13 +7,37 @@
     android:layout_height="match_parent"
     tools:context=".ViewUploadedHousesActivity">
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/myRecyclerView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!--
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:orientation="vertical"
+        android:background="@drawable/rounded_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/agentName2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="16sp"
+            android:layout_gravity="center_vertical"
+            android:padding="8dp"
+            android:textStyle="bold"/>
+
+    </LinearLayout>  -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -24,18 +24,6 @@
             android:id="@+id/displayImage1"/>
 
         <TextView
-            android:id="@+id/textDelete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:text="Delete?"
-            android:layout_gravity="end"
-            android:textColor="@color/red"
-            android:textStyle="bold"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"/>
-
-        <TextView
             android:id="@+id/textHouseTitle1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
