@@ -1,5 +1,6 @@
 package com.nephat.truhouse.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.nephat.truhouse.HouseDetailsActivity;
 import com.nephat.truhouse.R;
 import com.nephat.truhouse.models.FetchHousesResponse;
 import com.nephat.truhouse.models.House;
@@ -34,6 +36,9 @@ public class FeedsFragment extends Fragment {
     List<House> houseList;
     private List<FetchHousesResponse> responseList;
     private HouseAdapter houseAdapter;
+    private HouseAdapter.RecyclerViewClickListener listener;
+
+    private String userName, userEmail;
 
 
 
@@ -56,6 +61,11 @@ public class FeedsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        Intent intent = new Intent();
+        userName = intent.getStringExtra("name");
+        userEmail = intent.getStringExtra("email");
+
+        setOnClickListener();
         recyclerView = view.findViewById(R.id.myRecyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -74,7 +84,7 @@ public class FeedsFragment extends Fragment {
 
                     houseList = response.body().getHouseList();
 
-                    houseAdapter = new HouseAdapter(getActivity(), houseList);
+                    houseAdapter = new HouseAdapter(getActivity(), houseList, listener);
                     recyclerView.setAdapter(houseAdapter);
 
                     //recyclerView.setAdapter(new HouseAdapter(getContext(), houseList));
@@ -88,6 +98,36 @@ public class FeedsFragment extends Fragment {
                 Log.d(TAG, "onFailure: " + t.getLocalizedMessage());
             }
         });
+    }
+
+    private void setOnClickListener(){
+        listener = new HouseAdapter.RecyclerViewClickListener() {
+            @Override
+            public void onClick(View v, int position) {
+                Intent intent = new Intent(getActivity(), HouseDetailsActivity.class);
+                intent.putExtra("title", houseList.get(position).getTitle());
+                intent.putExtra("image", houseList.get(position).getImage_path());
+                intent.putExtra("image2", houseList.get(position).getImage_path2());
+                intent.putExtra("image3", houseList.get(position).getImage_path3());
+                intent.putExtra("location", houseList.get(position).getLocation());
+                intent.putExtra("price", houseList.get(position).getPrice());
+                intent.putExtra("contact", houseList.get(position).getContact());
+                intent.putExtra("description", houseList.get(position).getDescription());
+                intent.putExtra("house_type", houseList.get(position).getHouse_type());
+
+                intent.putExtra("name", userName);
+                intent.putExtra("email", userEmail);
+
+                Log.d(TAG, "onClick: " + houseList);
+                startActivity(intent);
+
+            }
+        };
+    }
+
+    private void setHouseInfo(){
+
+
     }
 
     private void toastMessage(String message){

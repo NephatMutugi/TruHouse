@@ -12,4 +12,5 @@
     <color name="blue">#0000ff</color>
     <color name="red">#ff0000</color>
     <color name="skyblue">#87CEFF</color>
+    <color name="light_cyan">#E0FFFF</color>
 </resources>

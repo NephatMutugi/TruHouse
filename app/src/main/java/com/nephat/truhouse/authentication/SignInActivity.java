@@ -35,6 +35,8 @@ public class SignInActivity extends AppCompatActivity {
     private boolean isRememberUserLogin = false;
     private AppConfig appConfig;
 
+    private String userName, userEmail;
+    String loginEmail, loginPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,7 @@ public class SignInActivity extends AppCompatActivity {
             String name = appConfig.getNameOfUser();
             Intent intent = new Intent(SignInActivity.this, MainActivity.class);
             intent.putExtra("name", name);
+            intent.putExtra("email", loginEmail);
             startActivity(intent);
             finish();
         }
@@ -87,7 +90,6 @@ public class SignInActivity extends AppCompatActivity {
     private void performLogin(){
 
 
-        String loginEmail, loginPassword;
         loginEmail = String.valueOf(mSignInEmail.getText());
         loginPassword = String.valueOf(mSignInPassword.getText());
 

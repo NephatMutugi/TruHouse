@@ -20,10 +20,12 @@ public class HouseAdapter extends RecyclerView.Adapter<HouseAdapter.ViewHolder> 
 
     List<House> houseList;
     Context context;
+    private RecyclerViewClickListener listener;
 
-    public HouseAdapter(Context context, List<House> houseList) {
+    public HouseAdapter(Context context, List<House> houseList, RecyclerViewClickListener listener) {
         this.context = context;
         this.houseList = houseList;
+        this.listener = listener;
         notifyDataSetChanged();
     }
 
@@ -56,7 +58,7 @@ public class HouseAdapter extends RecyclerView.Adapter<HouseAdapter.ViewHolder> 
         return houseList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
 
         TextView mHouseType, mHouseLocation, mMoreContact;
@@ -68,6 +70,19 @@ public class HouseAdapter extends RecyclerView.Adapter<HouseAdapter.ViewHolder> 
             mHouseType = itemView.findViewById(R.id.textHouseType);
             mHouseLocation = itemView.findViewById(R.id.textHouseLocation);
             mMoreContact = itemView.findViewById(R.id.contactMore);
+
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+
+            listener.onClick(v, getAbsoluteAdapterPosition());
+
+        }
+    }
+
+    public interface RecyclerViewClickListener{
+        void onClick(View v, int position);
     }
 }
