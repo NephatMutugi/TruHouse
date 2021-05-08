@@ -18,7 +18,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ViewUploadedHousesActivity"></activity>
+        <activity android:name=".AgentItemClick"></activity>
+        <activity android:name=".ViewUploadedHousesActivity" />
         <activity android:name=".ChooseActionActivity" />
         <activity
             android:name=".authentication.VerifyAgentActivity"

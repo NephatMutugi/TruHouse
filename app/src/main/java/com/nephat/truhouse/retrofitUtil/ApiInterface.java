@@ -1,6 +1,7 @@
 package com.nephat.truhouse.retrofitUtil;
 
 import com.nephat.truhouse.models.ApiResponse;
+import com.nephat.truhouse.models.FetchAgentHouseResponse;
 import com.nephat.truhouse.models.FetchHousesResponse;
 
 import retrofit2.Call;
@@ -8,6 +9,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 
 public interface ApiInterface {
@@ -44,6 +46,9 @@ public interface ApiInterface {
 
     @GET("fetchUsers.php")
     Call<FetchHousesResponse> fetchHouseInfo();
+
+    @GET("fetchAgentHouses.php")
+    Call<FetchAgentHouseResponse> fetchAgentHouseInfo(@Query("registered_agents_fk") String reg_no);
 
 
 /*   @FormUrlEncoded

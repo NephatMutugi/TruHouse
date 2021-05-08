@@ -31,7 +31,10 @@ public class ChooseActionActivity extends AppCompatActivity {
         mToViewHouse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ChooseActionActivity.this, UploadHousesActivity.class);
+                Intent intent = new Intent(ChooseActionActivity.this, ViewUploadedHousesActivity.class);
+                intent.putExtra("NAME", name);
+                intent.putExtra("ID", id);
+                intent.putExtra("REG", regNo);
                 startActivity(intent);
             }
         });
