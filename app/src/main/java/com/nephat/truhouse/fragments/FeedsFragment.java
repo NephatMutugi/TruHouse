@@ -4,12 +4,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -59,6 +63,7 @@ public class FeedsFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         super.onViewCreated(view, savedInstanceState);
 
         Intent intent = new Intent();
@@ -66,18 +71,13 @@ public class FeedsFragment extends Fragment {
         userName = intent.getStringExtra("name");
         userEmail = intent.getStringExtra("email");
 
-
-
         setOnClickListener();
         recyclerView = view.findViewById(R.id.myRecyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-
         //retrofit
-
         Call<FetchHousesResponse> call = ApiClient.getApiClient().create(ApiInterface.class).fetchHouseInfo();
-
         call.enqueue(new Callback<FetchHousesResponse>() {
             @Override
             public void onResponse(Call<FetchHousesResponse> call, Response<FetchHousesResponse> response) {
@@ -89,8 +89,6 @@ public class FeedsFragment extends Fragment {
 
                     houseAdapter = new HouseAdapter(getActivity(), houseList, listener);
                     recyclerView.setAdapter(houseAdapter);
-
-                    //recyclerView.setAdapter(new HouseAdapter(getContext(), houseList));
                 }
 
             }
@@ -102,6 +100,31 @@ public class FeedsFragment extends Fragment {
             }
         });
     }
+
+
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        //Inflate menu
+        inflater.inflate(R.menu.menu, menu);
+        MenuItem menuItem = menu.findItem(R.id.search);
+        SearchView searchView = (SearchView) menuItem.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                houseAdapter.getFilter().filter(newText.toString());
+                return false;
+            }
+        });
+
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
 
     private void setOnClickListener(){
         listener = new HouseAdapter.RecyclerViewClickListener() {
@@ -140,67 +163,3 @@ public class FeedsFragment extends Fragment {
 }
 
 
-
-
-
-
-//private ArrayList<DataModel> list = new ArrayList<>();
-
-
-/*
-
-        Call<FetchHousesResponse> call = RetrofitClient.getInstance().getApi().fetchHouseInfo();
-        call.enqueue(new Callback<FetchHousesResponse>() {
-            @Override
-            public void onResponse(Call<FetchHousesResponse> call, Response<FetchHousesResponse> response) {
-
-            }
-
-            @Override
-            public void onFailure(Call<FetchHousesResponse> call, Throwable t) {
-                toastMessage(t.getMessage());
-            }
-        });
-
-
-
-
-
-
-
-
-
-
-
-
-
-    private void initRecyclerView(View view){
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(linearLayoutManager);
-       // recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setHasFixedSize(true);
-        UserAdapter adapter = new UserAdapter(list);
-        recyclerView.setAdapter(adapter);
-    }
-
-    private void buildListData(){
-        list.add(new DataModel("Bedsitter"));
-        list.add(new DataModel("One Bedroom"));
-        list.add(new DataModel("Apartment Studio"));
-        list.add(new DataModel("Cottages"));
-        list.add(new DataModel("Two Bedrooms"));
-        list.add(new DataModel("Apartments for sale"));
-        list.add(new DataModel("Last Semester"));
-    }
-
-
-    @Override
-    public void onItemClick(DataModel dataModel) {
-
-    }
-
-
-        buildListData();
-        initRecyclerView(view);
-    */

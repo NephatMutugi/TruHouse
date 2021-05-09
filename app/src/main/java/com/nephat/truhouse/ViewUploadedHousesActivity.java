@@ -3,9 +3,13 @@ package com.nephat.truhouse;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,6 +33,7 @@ public class ViewUploadedHousesActivity extends AppCompatActivity {
     List<AgentHouse> agentHouseList;
     private List<FetchAgentHouseResponse> agentHouseResponseList;
     private AgentHouseAdapter agentHouseAdapter;
+    private AgentHouseAdapter.AgentRecyclerViewClickListener listener;
 
     private TextView mAgentName;
 
@@ -46,7 +51,7 @@ public class ViewUploadedHousesActivity extends AppCompatActivity {
         regNo = intent.getStringExtra("REG");
 
 
-
+        setOnClickListener();
         recyclerView = findViewById(R.id.myRecyclerView1);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -59,7 +64,7 @@ public class ViewUploadedHousesActivity extends AppCompatActivity {
                 if (response.isSuccessful()){
                     Log.d(TAG, "onResponse: "+ response.body().getAgentHouseList().toString());
                     agentHouseList = response.body().getAgentHouseList();
-                    agentHouseAdapter = new AgentHouseAdapter(agentHouseList, ViewUploadedHousesActivity.this);
+                    agentHouseAdapter = new AgentHouseAdapter(agentHouseList, ViewUploadedHousesActivity.this, listener);
                     recyclerView.setAdapter(agentHouseAdapter);
 
                 }
@@ -70,6 +75,52 @@ public class ViewUploadedHousesActivity extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    private void setOnClickListener(){
+        listener = new AgentHouseAdapter.AgentRecyclerViewClickListener() {
+            @Override
+            public void onClick(View v, int position) {
+                Intent intent = new Intent(getApplicationContext(), AgentItemClick.class);
+                intent.putExtra("title", agentHouseList.get(position).getTitle());
+                intent.putExtra("image", agentHouseList.get(position).getImage_path());
+                intent.putExtra("image2", agentHouseList.get(position).getImage_path2());
+                intent.putExtra("image3", agentHouseList.get(position).getImage_path3());
+                intent.putExtra("location", agentHouseList.get(position).getLocation());
+                intent.putExtra("price", agentHouseList.get(position).getLocation());
+                intent.putExtra("contact", agentHouseList.get(position).getLocation());
+                intent.putExtra("description", agentHouseList.get(position).getDescription());
+                intent.putExtra("house_type", agentHouseList.get(position).getHouse_type());
+
+                startActivity(intent);
+            }
+        };
+
+
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        MenuItem menuItem = menu.findItem(R.id.search);
+        SearchView searchView = (SearchView) menuItem.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                agentHouseAdapter.getFilter().filter(s.toString());
+                return false;
+            }
+        });
+
+        return super.onCreateOptionsMenu(menu);
 
     }
 
