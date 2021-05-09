@@ -12,25 +12,24 @@
         android:layout_height="wrap_content">
 
 
+        <com.denzcoskun.imageslider.ImageSlider
+            android:id="@+id/agentHouseImageSlider"
+            android:layout_width="match_parent"
+            android:layout_height="210dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="2dp"
+            app:iss_auto_cycle="true"
+            app:iss_corner_radius="5"
+            app:iss_delay="0"
+            app:iss_error_image="@drawable/background_gry"
+            app:iss_period="3000"
+            app:iss_placeholder="@drawable/background_gry"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <com.denzcoskun.imageslider.ImageSlider
-        android:id="@+id/agentHouseImageSlider"
-        android:layout_width="match_parent"
-        android:layout_height="210dp"
-        app:iss_auto_cycle="true"
-        app:iss_delay="0"
-        app:iss_period="3000"
-        app:iss_corner_radius="5"
-        app:iss_placeholder="@drawable/background_gry"
-        app:iss_error_image="@drawable/background_gry"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="2dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </com.denzcoskun.imageslider.ImageSlider>
+        </com.denzcoskun.imageslider.ImageSlider>
 
         <TextView
             android:id="@+id/agentHouseTitle"
@@ -55,18 +54,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/agentHouseTitle" />
 
-    <EditText
-        android:id="@+id/agentDispType"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="80dp"
-        android:hint="One bedroom"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/agentHouseTitle" />
+        <EditText
+            android:id="@+id/agentDispType"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="65dp"
+            android:hint="One bedroom"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/agentHouseTitle" />
 
     <TextView
         android:id="@+id/agentLocationText"
@@ -90,31 +89,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/agentLocationText" />
 
-    <EditText
-        android:id="@+id/agentDispLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="80dp"
-        android:hint="Location"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/agentDispType" />
+        <EditText
+            android:id="@+id/agentDispLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="65dp"
+            android:hint="Location"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/agentDispType" />
 
-    <EditText
-        android:id="@+id/agentDispPrice"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="80dp"
-        android:hint="Price in Ksh"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/agentDispLocation" />
+        <EditText
+            android:id="@+id/agentDispPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="65dp"
+            android:hint="Price in Ksh"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/agentDispLocation" />
 
     <TextView
         android:id="@+id/agentTextView13"
@@ -127,18 +126,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/agentTextView11" />
 
-    <EditText
-        android:id="@+id/agentDispContact"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="80dp"
-        android:hint="Contact"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/agentDispPrice" />
+        <EditText
+            android:id="@+id/agentDispContact"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="65dp"
+            android:hint="Contact"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/agentDispPrice" />
 
     <TextView
         android:id="@+id/agentTextView15"
@@ -166,6 +165,22 @@
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/agentTextView15" />
+
+        <Button
+            android:id="@+id/updateBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="16dp"
+            android:text="Update Details"
+            android:textColor="@color/white"
+            android:background="@drawable/rounded_button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/agentDispDescription" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -81,7 +81,8 @@ public class AgentHouseAdapter extends RecyclerView.Adapter<AgentHouseAdapter.Ag
             } else {
                 for (AgentHouse item:filterList){
                     if (item.getLocation().toLowerCase().contains(searchText) ||
-                    item.getHouse_type().toLowerCase().contains(searchText)){
+                    item.getHouse_type().toLowerCase().contains(searchText) ||
+                            item.getTitle().toLowerCase().contains(searchText)){
                         tempList.add(item);
                     }
                 }

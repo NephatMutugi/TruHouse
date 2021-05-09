@@ -81,8 +81,7 @@ public class HouseAdapter extends RecyclerView.Adapter<HouseAdapter.ViewHolder> 
             } else {
                 for (House item:newHouseList){
                     if (item.getLocation().toLowerCase().contains(searchText) ||
-                            item.getHouse_type().toLowerCase().contains(searchText) ||
-                            item.getTitle().toLowerCase().contains(searchText)){
+                            item.getHouse_type().toLowerCase().contains(searchText)){
                         tempList.add(item);
                     }
                 }

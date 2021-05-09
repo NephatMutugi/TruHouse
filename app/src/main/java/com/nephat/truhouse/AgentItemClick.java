@@ -2,6 +2,8 @@ package com.nephat.truhouse;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -58,6 +60,16 @@ public class AgentItemClick extends AppCompatActivity {
         imageSlider.setImageList(slideModels, ScaleTypes.FIT);
 
 
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_item, menu);
+        MenuItem menuItem = menu.findItem(R.id.deleteItem);
+
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     private void toastMessage(String message){
