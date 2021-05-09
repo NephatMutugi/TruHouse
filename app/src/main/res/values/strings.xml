@@ -43,4 +43,5 @@
     <string name="location_hint">Location in the country</string>
     <string name="reg_agent_text">Your registration number is:</string>
     <string name="upload_text_intro">Input the details of the house you want to register here. NOTE:All fields are mandatory</string>
+    <string name="request1">I am interested in the home at </string>
 </resources>

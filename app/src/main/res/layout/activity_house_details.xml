@@ -153,7 +153,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="400dp"
         android:layout_marginTop="24dp"
         android:layout_marginBottom="8dp"
         android:orientation="vertical"
@@ -167,26 +167,75 @@
             android:text="Request Info"
             android:textSize="20sp"
             android:textStyle="bold"/>
-
-      <!--
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/input_name"
+        <EditText
+            android:id="@+id/yourName"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="10dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            app:boxStrokeColor="@color/icons"
-            app:boxStrokeWidth="2dp">
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="10dp"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:textColor="@color/black"
+            android:layout_marginTop="10dp"
+            android:hint="Name"
+            android:textSize="18sp"
+            android:background="@drawable/rounded_text"/>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/user_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"/>
-        </com.google.android.material.textfield.TextInputLayout>
-        -->
+        <EditText
+            android:id="@+id/yourEmail"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="10dp"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:textColor="@color/black"
+            android:layout_marginTop="10dp"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:textSize="18sp"
+            android:background="@drawable/rounded_text"/>
+
+        <EditText
+            android:id="@+id/yourPhone"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="10dp"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:textColor="@color/black"
+            android:layout_marginTop="10dp"
+            android:hint="07xxxxxxxx"
+            android:inputType="phone"
+            android:textSize="18sp"
+            android:background="@drawable/rounded_text"/>
+
+        <EditText
+            android:id="@+id/yourRequest"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginHorizontal="10dp"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:textColor="@color/black"
+            android:layout_marginTop="10dp"
+            android:hint="07xxxxxxxx"
+            android:inputType="textMultiLine"
+            android:textSize="18sp"
+            android:background="@drawable/rounded_text"/>
+
+        <Button
+            android:id="@+id/btnRequestInfo"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="8dp"
+            android:text="Request Info"
+            android:textAllCaps="true"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:drawableStart="@drawable/ic_email"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:background="@drawable/rounded_btn2"/>
 
     </LinearLayout>
 

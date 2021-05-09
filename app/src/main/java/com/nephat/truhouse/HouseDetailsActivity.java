@@ -1,7 +1,12 @@
 package com.nephat.truhouse;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
-import com.google.android.material.textfield.TextInputEditText;
 import com.nephat.truhouse.models.FetchHousesResponse;
 import com.nephat.truhouse.models.House;
 import com.nephat.truhouse.retrofitUtil.ApiClient;
@@ -32,7 +36,8 @@ public class HouseDetailsActivity extends AppCompatActivity {
 
     //Widgets
     private TextView mDispType, mDispLocation, mDispPrice, mDispContact, mDispDescription;
-    private TextInputEditText mName;
+    private EditText mUserName, mUserEmail, mUserPhone, mUserRequest;
+    private Button mBtnRequestInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +74,23 @@ public class HouseDetailsActivity extends AppCompatActivity {
         mDispDescription = findViewById(R.id.dispDescription);
         mDispDescription.setText(description);
 
-        //mName = findViewById(R.id.user_name);
-       // mName.setText(name);
+        mUserName = findViewById(R.id.yourName);
+        mUserName.setText(name);
+
+        mUserPhone = findViewById(R.id.yourPhone);
+        mUserEmail = findViewById(R.id.yourEmail);
+        mUserRequest = findViewById(R.id.yourRequest);
+        mBtnRequestInfo = findViewById(R.id.btnRequestInfo);
+
+        mUserRequest.setText(R.string.request1);
+        mUserRequest.append(location);
+        mUserRequest.append(" it is a ");
+        mUserRequest.append(houseType);
+        mUserRequest.append(" named ");
+        mUserRequest.append(title);
+
+        Log.d(TAG, "onCreate: " +email);
+
 
 
 
@@ -83,5 +103,40 @@ public class HouseDetailsActivity extends AppCompatActivity {
 
 
         Call<FetchHousesResponse> call = ApiClient.getApiClient().create(ApiInterface.class).fetchHouseInfo();
+
+        mBtnRequestInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendMail();
+            }
+        });
+
     }
+
+    private void sendMail(){
+        Log.d(TAG, "sendMail: Sending email");
+        //Get text from the text views
+        String name, email, phone, body;
+        name = String.valueOf(mUserName.getText());
+        email = String.valueOf(mUserEmail.getText());
+        phone = String.valueOf(mUserPhone.getText());
+        body = String.valueOf(mUserRequest.getText());
+
+
+        //Destination for the email
+        String [] sendTo = {"nephproject080@gmail.com"};
+
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:"));
+        intent.putExtra(Intent.EXTRA_EMAIL, sendTo);
+
+        intent.putExtra(Intent.EXTRA_SUBJECT, "REQUEST INFORMATION ABOUT A HOUSE");
+        intent.putExtra(Intent.EXTRA_TEXT, "Personal information : \n Name: " +name + "\n Phone: " +phone
+        + "\n Email: " + email + "\n" + body);
+
+        startActivity(Intent.createChooser(intent, "Choose application to use"));
+
+
+    }
+
 }

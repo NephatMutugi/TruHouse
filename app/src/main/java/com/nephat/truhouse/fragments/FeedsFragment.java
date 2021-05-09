@@ -62,8 +62,11 @@ public class FeedsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         Intent intent = new Intent();
+
         userName = intent.getStringExtra("name");
         userEmail = intent.getStringExtra("email");
+
+
 
         setOnClickListener();
         recyclerView = view.findViewById(R.id.myRecyclerView);

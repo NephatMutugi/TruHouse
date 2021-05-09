@@ -63,7 +63,9 @@ public class SignInActivity extends AppCompatActivity {
         mSignInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 performLogin();
+
             }
         });
 
