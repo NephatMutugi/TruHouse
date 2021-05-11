@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RateAgentActivity">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="5dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/layout_agent_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:padding="8dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textAgentName"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Name: "
+                android:textSize="18sp"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="10dp"/>
+
+            <TextView
+                android:id="@+id/textAgentLocality"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Location: "
+                android:textSize="18sp"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="10dp"/>
+            <TextView
+                android:id="@+id/textAgentPhone"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Phone: "
+                android:textSize="18sp"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="10dp"/>
+            <TextView
+                android:id="@+id/textAgentEmail"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Email: "
+                android:textSize="18sp"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="10dp"/>
+            <TextView
+                android:id="@+id/textAgentQualification"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Qualification: "
+                android:textSize="18sp"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="10dp"/>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

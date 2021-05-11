@@ -18,7 +18,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".HouseDetailsActivity"></activity>
+        <activity android:name=".RateAgentActivity"></activity>
+        <activity android:name=".HouseDetailsActivity" />
         <activity android:name=".AgentItemClick" />
         <activity android:name=".ViewUploadedHousesActivity" />
         <activity android:name=".ChooseActionActivity" />

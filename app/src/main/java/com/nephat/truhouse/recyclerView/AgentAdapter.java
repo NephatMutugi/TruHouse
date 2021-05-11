@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,16 +13,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.nephat.truhouse.R;
 import com.nephat.truhouse.models.AgentList;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class AgentAdapter extends RecyclerView.Adapter<AgentAdapter.ViewHolder> {
 
     List<AgentList> agentList;
+    List<AgentList> newAgentList;
     Context context;
+    private AgentRecyclerViewClickListener listener;
 
-    public AgentAdapter(List<AgentList> agentList, Context context) {
+
+
+    public AgentAdapter(List<AgentList> agentList, Context context, AgentRecyclerViewClickListener listener) {
         this.agentList = agentList;
         this.context = context;
+        this.listener = listener;
+        newAgentList = new ArrayList<>(agentList);
 
         notifyDataSetChanged();
 
@@ -32,7 +41,6 @@ public class AgentAdapter extends RecyclerView.Adapter<AgentAdapter.ViewHolder> 
     @Override
     public AgentAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.agent_item, parent, false);
-
 
         return new ViewHolder(view);
     }
@@ -52,7 +60,43 @@ public class AgentAdapter extends RecyclerView.Adapter<AgentAdapter.ViewHolder> 
         return agentList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public Filter getFilter(){
+        return filterAgent;
+    }
+
+    private Filter filterAgent = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            String searchText = constraint.toString().toLowerCase();
+            List<AgentList> tempList = new ArrayList<>();
+            if (searchText.length()== 0 || searchText.isEmpty()){
+                tempList.addAll(newAgentList);
+            } else {
+                for (AgentList item:newAgentList){
+                    if (item.getLocality().toLowerCase().contains(searchText) ||
+                    item.getName().toLowerCase().contains(searchText)){
+                        tempList.add(item);
+                    }
+                }
+            }
+
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = tempList;
+
+
+            return filterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+
+            agentList.clear();
+            agentList.addAll((Collection<? extends AgentList>) results.values);
+            notifyDataSetChanged();
+        }
+    };
+
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView agentName, agentLocality;
 
@@ -61,6 +105,16 @@ public class AgentAdapter extends RecyclerView.Adapter<AgentAdapter.ViewHolder> 
             agentName = itemView.findViewById(R.id.textNameAgent);
             agentLocality = itemView.findViewById(R.id.textLocalityAgent);
 
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            listener.onClick(v, getAbsoluteAdapterPosition());
+        }
+    }
+
+    public interface AgentRecyclerViewClickListener{
+        void onClick(View v, int position);
     }
 }
