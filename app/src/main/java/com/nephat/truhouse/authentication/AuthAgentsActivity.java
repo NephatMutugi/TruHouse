@@ -95,10 +95,11 @@ public class AuthAgentsActivity extends AppCompatActivity {
 
     private void verifyRegistrationNumber(){
         String registrationNo;
-        registrationNo = String.valueOf(mRegNo);
-        if (!registrationNo.isEmpty()){
+        registrationNo = String.valueOf(mRegNo.getText());
+
+        if (!registrationNo.isEmpty() && registrationNo.matches("\\d+(?:\\.\\d+)?")){
             Intent intent = new Intent(AuthAgentsActivity.this, VerifyAgentActivity.class);
-            intent.putExtra("REG_NUMBER", regNumber);
+            intent.putExtra("REG_NUMBER", registrationNo);
             startActivity(intent);
         } else{
             toastMessage("No valid registration number found");

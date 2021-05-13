@@ -109,6 +109,7 @@ public class FeedsFragment extends Fragment {
         inflater.inflate(R.menu.menu, menu);
         MenuItem menuItem = menu.findItem(R.id.search);
         SearchView searchView = (SearchView) menuItem.getActionView();
+        searchView.setQueryHint("Search Location/House Type");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

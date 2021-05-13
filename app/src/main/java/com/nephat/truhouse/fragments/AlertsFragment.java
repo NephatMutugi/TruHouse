@@ -50,12 +50,14 @@ public class AlertsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_alerts, container, false);
+       View view =  inflater.inflate(R.layout.fragment_alerts, container, false);
+
+       return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        //setHasOptionsMenu(true);
+        setHasOptionsMenu(true);
         super.onViewCreated(view, savedInstanceState);
 
         setOnClickListener();
@@ -90,6 +92,7 @@ public class AlertsFragment extends Fragment {
         inflater.inflate(R.menu.menu, menu);
         MenuItem menuItem = menu.findItem(R.id.search);
         SearchView searchView = (SearchView) menuItem.getActionView();
+        searchView.setQueryHint("Search");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -99,7 +102,9 @@ public class AlertsFragment extends Fragment {
             @Override
             public boolean onQueryTextChange(String newText) {
 
-                agentAdapter.getFilter().filter(newText.toString());
+                if (agentAdapter != null){
+                    agentAdapter.getFilter().filter(newText.toString());
+                }
                 return false;
             }
         });
@@ -112,6 +117,8 @@ public class AlertsFragment extends Fragment {
             @Override
             public void onClick(View v, int position) {
                 Intent intent = new Intent(getActivity(), RateAgentActivity.class);
+                intent.putExtra("id", agentLists.get(position).getId());
+                intent.putExtra("reg_no", agentLists.get(position).getReg_no());
                 intent.putExtra("name", agentLists.get(position).getName());
                 intent.putExtra("email", agentLists.get(position).getEmail());
                 intent.putExtra("phone", agentLists.get(position).getPhone());

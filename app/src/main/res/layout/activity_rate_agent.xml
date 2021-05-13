@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,7 +7,13 @@
     android:layout_height="match_parent"
     tools:context=".RateAgentActivity">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
@@ -27,51 +33,154 @@
             android:layout_marginStart="4dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="4dp"
-            android:padding="8dp"
-            android:orientation="vertical">
+            android:layout_marginBottom="4dp"
+            android:orientation="vertical"
+            android:padding="8dp">
 
             <TextView
                 android:id="@+id/textAgentName"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:text="Name: "
-                android:textSize="18sp"
                 android:gravity="center_vertical"
-                android:paddingHorizontal="10dp"/>
+                android:paddingHorizontal="10dp"
+                android:textStyle="bold"
+                android:text="Name: "
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/textAgentLocality"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:text="Location: "
-                android:textSize="18sp"
                 android:gravity="center_vertical"
-                android:paddingHorizontal="10dp"/>
+                android:paddingHorizontal="10dp"
+                android:text="Location: "
+                android:textSize="18sp" />
+
             <TextView
                 android:id="@+id/textAgentPhone"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:text="Phone: "
-                android:textSize="18sp"
                 android:gravity="center_vertical"
-                android:paddingHorizontal="10dp"/>
+                android:paddingHorizontal="10dp"
+                android:text="Phone: "
+                android:textSize="18sp" />
+
             <TextView
                 android:id="@+id/textAgentEmail"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:text="Email: "
-                android:textSize="18sp"
                 android:gravity="center_vertical"
-                android:paddingHorizontal="10dp"/>
+                android:paddingHorizontal="10dp"
+                android:text="Email: "
+                android:textSize="18sp" />
+
             <TextView
                 android:id="@+id/textAgentQualification"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:text="Qualification: "
-                android:textSize="18sp"
+                android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:paddingHorizontal="10dp"/>
+                android:paddingHorizontal="10dp"
+                android:text="Qualification: "
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textAgentRating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="10dp"
+                android:text="Rating: "
+                android:textSize="16sp"
+                android:textColor="@color/blue"
+                android:textStyle="bold"/>
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/textRate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="10dp"
+            android:text="Rate this agent"
+            android:textColor="@color/blue"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView2" />
+
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textRate" />
+
+
+
+    <TextView
+        android:id="@+id/textReview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginTop="10dp"
+        android:padding="8dp"
+        android:background="@drawable/round_edit_text2"
+        android:text="Write a review"
+        android:textColor="@color/blue"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
+
+    <EditText
+        android:id="@+id/editReview"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@drawable/round_edit_text"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:padding="8dp"
+        android:textAlignment="viewStart"
+        android:inputType="textMultiLine"
+        android:hint="Write a review"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textReview" />
+
+        <Button
+            android:id="@+id/btnSubmitReview"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="Submit Review"
+            android:background="@drawable/rounded_button"
+            android:textColor="@color/white"
+            android:textAllCaps="true"
+            app:layout_constraintTop_toBottomOf="@+id/editReview"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:id="@+id/textUserRating"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:gravity="center_vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ratingBar"
+            app:layout_constraintTop_toBottomOf="@+id/textRate" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</ScrollView>

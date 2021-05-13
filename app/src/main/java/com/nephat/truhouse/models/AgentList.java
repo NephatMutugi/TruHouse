@@ -2,6 +2,8 @@ package com.nephat.truhouse.models;
 
 public class AgentList {
 
+    private String id;
+    private String reg_no;
     private String name;
     private String address;
     private String qualification;
@@ -13,13 +15,23 @@ public class AgentList {
 
     }
 
-    public AgentList(String name, String address, String qualification, String phone, String email, String locality) {
+    public AgentList(String id, String reg_no, String name, String address, String qualification, String phone, String email, String locality) {
+        this.id = id;
+        this.reg_no = reg_no;
         this.name = name;
         this.address = address;
         this.qualification = qualification;
         this.phone = phone;
         this.email = email;
         this.locality = locality;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getReg_no() {
+        return reg_no;
     }
 
     public String getName() {

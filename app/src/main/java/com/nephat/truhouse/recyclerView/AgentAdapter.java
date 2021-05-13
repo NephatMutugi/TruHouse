@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class AgentAdapter extends RecyclerView.Adapter<AgentAdapter.ViewHolder> {
+public class AgentAdapter extends RecyclerView.Adapter<AgentAdapter.ViewHolder> implements Filterable {
 
     List<AgentList> agentList;
     List<AgentList> newAgentList;
@@ -33,7 +34,6 @@ public class AgentAdapter extends RecyclerView.Adapter<AgentAdapter.ViewHolder> 
         newAgentList = new ArrayList<>(agentList);
 
         notifyDataSetChanged();
-
 
     }
 
@@ -60,6 +60,45 @@ public class AgentAdapter extends RecyclerView.Adapter<AgentAdapter.ViewHolder> 
         return agentList.size();
     }
 
+    @Override
+    public Filter getFilter() {
+        return filterAgent;
+    }
+
+
+    private Filter filterAgent = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            String searchAgent = constraint.toString().toLowerCase();
+            List<AgentList> tempLists = new ArrayList<>();
+
+            if (searchAgent.length()==0 || searchAgent.isEmpty()){
+                tempLists.addAll(newAgentList);
+            } else {
+                for (AgentList item:newAgentList){
+                    if (item.getName().toLowerCase().contains(searchAgent) ||
+                    item.getLocality().toLowerCase().contains(searchAgent)){
+                        tempLists.add(item);
+                    }
+                }
+            }
+
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = tempLists;
+
+
+            return filterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults filterResults) {
+            agentList.clear();
+            agentList.addAll((Collection<? extends AgentList>) filterResults.values);
+            notifyDataSetChanged();
+        }
+    };
+
+/*
     public Filter getFilter(){
         return filterAgent;
     }
@@ -83,18 +122,17 @@ public class AgentAdapter extends RecyclerView.Adapter<AgentAdapter.ViewHolder> 
             FilterResults filterResults = new FilterResults();
             filterResults.values = tempList;
 
-
             return filterResults;
         }
 
         @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
+        protected void publishResults(CharSequence constraint, FilterResults filterResults) {
 
             agentList.clear();
-            agentList.addAll((Collection<? extends AgentList>) results.values);
+            agentList.addAll((Collection<? extends AgentList>) filterResults.values);
             notifyDataSetChanged();
         }
-    };
+    }; */
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
