@@ -42,8 +42,9 @@ public class FeedsFragment extends Fragment {
     private HouseAdapter houseAdapter;
     private HouseAdapter.RecyclerViewClickListener listener;
 
-    private String userName, userEmail;
 
+    private String mName, mID;
+    private String name, id, email;
 
 
     public FeedsFragment() {
@@ -66,11 +67,21 @@ public class FeedsFragment extends Fragment {
         setHasOptionsMenu(true);
         super.onViewCreated(view, savedInstanceState);
 
-        Intent intent = new Intent();
 
-        userName = intent.getStringExtra("name");
-        userEmail = intent.getStringExtra("email");
+   /*
+        Bundle b3 = getArguments();
+        if (b3 != null) {
+            mName = b3.getString("uName");
+        }
+        if (b3 != null) {
+            mID = b3.getString("uID");
+        }
 
+        Log.d(TAG, "onViewCreated: " + myName + " " + myId);
+
+        //Log.d(TAG, "onViewCreated: " +userName + " " +userEmail);
+
+*/
         setOnClickListener();
         recyclerView = view.findViewById(R.id.myRecyclerView);
         recyclerView.setHasFixedSize(true);
@@ -101,6 +112,18 @@ public class FeedsFragment extends Fragment {
         });
     }
 
+    public void setMyData(String name, String id, String email){
+        this.name = name;
+        this.id = id;
+        this.email = email;
+        Log.d(TAG, "setMyData: " +name + " " + id + email);
+
+        String myName, myId;
+        myName = name;
+        myId = id;
+    }
+
+
 
 
     @Override
@@ -118,7 +141,11 @@ public class FeedsFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                houseAdapter.getFilter().filter(newText.toString());
+
+                if (houseAdapter != null){
+                    houseAdapter.getFilter().filter(newText);
+                }
+
                 return false;
             }
         });
@@ -142,8 +169,12 @@ public class FeedsFragment extends Fragment {
                 intent.putExtra("description", houseList.get(position).getDescription());
                 intent.putExtra("house_type", houseList.get(position).getHouse_type());
 
-                intent.putExtra("name", userName);
-                intent.putExtra("email", userEmail);
+
+                Log.d(TAG, "onClick: " + name + " " + id);
+                intent.putExtra("NAME", name);
+                intent.putExtra("EMAIL", email);
+
+
 
                 Log.d(TAG, "onClick: " + houseList);
                 startActivity(intent);

@@ -1,6 +1,8 @@
 package com.nephat.truhouse;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -16,6 +18,9 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
+    private String id, name;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +32,11 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
 
+        Intent intent = getIntent();
+        id = intent.getStringExtra("id");
+        name = intent.getStringExtra("name");
 
+        Log.d(TAG, "onCreate: " + id + " " + name);
 
     }
     private void toastMessage(String message){

@@ -2,14 +2,24 @@ package com.nephat.truhouse;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.nephat.truhouse.models.ApiResponse;
+import com.nephat.truhouse.retrofitUtil.ApiClient;
+import com.nephat.truhouse.retrofitUtil.ApiInterface;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RateAgentActivity extends AppCompatActivity {
 
@@ -20,8 +30,9 @@ public class RateAgentActivity extends AppCompatActivity {
     private EditText mEditReview;
     private Button mBtnSubmitReview;
 
-    private String id, reg_no, name, email, phone, locality, qualification;
+    private String id, reg_no, name, email, phone, locality, qualification, userId, userName, rating;
     String temp;
+    private static String avgRating;
     Float rateValue;
 
     @Override
@@ -39,6 +50,16 @@ public class RateAgentActivity extends AppCompatActivity {
         locality = intent.getStringExtra("locality");
         qualification = intent.getStringExtra("qualification");
 
+        userId = intent.getStringExtra("user_id");
+        userName = intent.getStringExtra("user_name");
+        avgRating = intent.getStringExtra("rating");
+
+
+        //getAgentRating();
+
+
+        Log.d(TAG, "onCreate: " + userId + " " + userName + " " + id + " " + reg_no);
+
         //Initialize widgets
         mName = findViewById(R.id.textAgentName);
         mEmail = findViewById(R.id.textAgentEmail);
@@ -51,14 +72,17 @@ public class RateAgentActivity extends AppCompatActivity {
         mAgentRating = findViewById(R.id.textAgentRating);
         mUserRating = findViewById(R.id.textUserRating);
 
-        mAgentRating.append("4.5");
+        if (avgRating != null){
+            mAgentRating.append(avgRating);
+        } /*else {
+            mAgentRating.append(avgRating);
+        }*/
 
         mName.append(name);
         mEmail.append(email);
         mPhone.append(phone);
         mLocality.append(locality);
         mQualification.append(qualification);
-
 
         mRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
@@ -69,16 +93,85 @@ public class RateAgentActivity extends AppCompatActivity {
             }
         });
 
-
         mBtnSubmitReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                rateAgent();
+            }
+        });
+    }
+
+    private void getAgentRating(){
+
+        Call<ApiResponse> call = ApiClient.getApiClient().create(ApiInterface.class).getAvgRating(reg_no);
+        call.enqueue(new Callback<ApiResponse>() {
+            @Override
+            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+
+                if (response.code() == 200){
+
+                    if (response.body().getResultCode() == 1){
+                        avgRating = response.body().getAverage();
+                        Log.d(TAG, "onResponse: " +avgRating );
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse> call, Throwable t) {
 
             }
         });
     }
 
 
+    private void rateAgent(){
+
+        String user_id, agent_id, agent_reg, rating, review;
+        review = String.valueOf(mEditReview.getText());
+
+        user_id = userId;
+        agent_id = id;
+        rating = temp;
+        agent_reg = reg_no;
+
+        Call<ApiResponse> call = ApiClient.getApiClient().create(ApiInterface.class).performAgentRating(user_id, agent_id, agent_reg, rating, review);
+        call.enqueue(new Callback<ApiResponse>() {
+            @Override
+            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                if (response.code() == 200){
+                    if (response.body().getStatus().equals("ok")){
+                        if (response.body().getResultCode() == 1){
+                            toastMessage("User rated successfully");
+                        } else {
+                            toastMessage("You've already rated this agent");
+                        }
+                    } else {
+                        toastMessage("An error occurred");
+                    }
+                } else {
+                    toastMessage("Something went wrong");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    private void toastMessage(String message)
+    {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+    }
     private void hideSoftKeyboard()
     {
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);

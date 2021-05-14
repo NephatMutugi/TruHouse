@@ -22,6 +22,20 @@ public class ApiResponse {
     @SerializedName("reg_no")
     private String reg_no;
 
+    @SerializedName("email")
+    private String email;
+
+    @SerializedName("average")
+    private String average;
+
+    public String getAverage() {
+        return average;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
     public String getStatus() {
         return status;
     }

@@ -55,8 +55,9 @@ public class HouseDetailsActivity extends AppCompatActivity {
         houseType = intent.getStringExtra("house_type");
         description = intent.getStringExtra("description");
 
-        name = intent.getStringExtra("name");
-        email = intent.getStringExtra("email");
+        name = intent.getStringExtra("NAME");
+        email = intent.getStringExtra("EMAIL");
+        Log.d(TAG, "onCreate: " + name + email);
 
         //Widgets
         mDispType = findViewById(R.id.dispType);
@@ -79,6 +80,8 @@ public class HouseDetailsActivity extends AppCompatActivity {
 
         mUserPhone = findViewById(R.id.yourPhone);
         mUserEmail = findViewById(R.id.yourEmail);
+        mUserEmail.setText(email);
+
         mUserRequest = findViewById(R.id.yourRequest);
         mBtnRequestInfo = findViewById(R.id.btnRequestInfo);
 

@@ -2,6 +2,7 @@ package com.nephat.truhouse.authentication;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -14,6 +15,8 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.nephat.truhouse.MainActivity;
 import com.nephat.truhouse.R;
 import com.nephat.truhouse.apputil.AppConfig;
+import com.nephat.truhouse.fragments.AlertsFragment;
+import com.nephat.truhouse.fragments.FeedsFragment;
 import com.nephat.truhouse.models.ApiResponse;
 import com.nephat.truhouse.retrofitUtil.ApiClient;
 import com.nephat.truhouse.retrofitUtil.ApiInterface;
@@ -35,8 +38,11 @@ public class SignInActivity extends AppCompatActivity {
     private boolean isRememberUserLogin = false;
     private AppConfig appConfig;
 
-    private String userName, userEmail;
+    private String userEmail;
+    private String userName, id;
     String loginEmail, loginPassword;
+
+    FeedsFragment feedsFragment = new FeedsFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +59,7 @@ public class SignInActivity extends AppCompatActivity {
         if (appConfig.isUserLogin()){
             String name = appConfig.getNameOfUser();
             Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-            intent.putExtra("name", name);
+            intent.putExtra("name", userName);
             intent.putExtra("email", loginEmail);
             startActivity(intent);
             finish();
@@ -63,7 +69,6 @@ public class SignInActivity extends AppCompatActivity {
         mSignInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 performLogin();
 
             }
@@ -91,7 +96,6 @@ public class SignInActivity extends AppCompatActivity {
 
     private void performLogin(){
 
-
         loginEmail = String.valueOf(mSignInEmail.getText());
         loginPassword = String.valueOf(mSignInPassword.getText());
 
@@ -107,14 +111,38 @@ public class SignInActivity extends AppCompatActivity {
 
                             if (response.body().getResultCode() == 1){
 
-                                String name = response.body().getName();
+                                userName = response.body().getName();
+                                id = response.body().getId();
+                                userEmail = response.body().getEmail();
+
+                                String myName, myID, myEmail;
+                                myName = userName;
+                                myID = id;
+                                myEmail = userEmail;
+                                Log.d(TAG, "onResponse: " + myName + myID);
+
+                                /*Bundle b2 = new Bundle();
+                                b2.putString("uName", myName);
+                                b2.putString("uID", myID);
+                                FeedsFragment feedsFragment1 = new FeedsFragment();
+                                feedsFragment1.setArguments(b2);*/
+                                FeedsFragment feedsFragment1 = new FeedsFragment();
+                                feedsFragment1.setMyData(myName, myID, myEmail);
+
+                                AlertsFragment alertsFragment = new AlertsFragment();
+                                alertsFragment.setData(myID, myName);
+
+                                Log.d(TAG, "onResponse: " +userName+" " + "id:" + id + " email: " +myEmail);
+
 
                                 if (isRememberUserLogin){
                                     appConfig.updateUserLoginStatus(true);
-                                    appConfig.saveNameOfUser(name);
+                                    appConfig.saveNameOfUser(userName);
                                 }
 
                                 Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                                intent.putExtra("name", myName);
+                                intent.putExtra("id", myID);
                                 startActivity(intent);
                                 finish();
 

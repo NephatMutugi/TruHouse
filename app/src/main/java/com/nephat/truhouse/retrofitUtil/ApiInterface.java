@@ -21,6 +21,12 @@ public interface ApiInterface {
                                         @Field("password") String password);
 
    @FormUrlEncoded
+   @POST("ratingAgent.php")
+   Call<ApiResponse> performAgentRating(@Field("user_id") String user_id, @Field("agent_id") String agent_id,
+                                        @Field("agent_reg") String agent_reg, @Field("rating") String rating,
+                                        @Field("review") String review);
+
+   @FormUrlEncoded
    @POST("login.php")
     Call<ApiResponse> performUserLogin(@Field("email") String email, @Field("password") String password);
 
@@ -50,6 +56,9 @@ public interface ApiInterface {
 
     @GET("fetchAgentHouses.php")
     Call<FetchAgentHouseResponse> fetchAgentHouseInfo(@Query("registered_agents_fk") String reg_no);
+
+    @GET("getRating.php")
+    Call<ApiResponse> getAvgRating(@Query("agent_reg_no") String agent_reg_no);
 
     @GET("fetchAgents.php")
     Call<FetchAgentListResponse> fetchAgentsList();
