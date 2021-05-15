@@ -14,6 +14,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.nephat.truhouse.ChooseActionActivity;
 import com.nephat.truhouse.R;
 import com.nephat.truhouse.models.ApiResponse;
+import com.nephat.truhouse.resetPassword.AgentEnterEmailActivity;
 import com.nephat.truhouse.retrofitUtil.ApiClient;
 import com.nephat.truhouse.retrofitUtil.ApiInterface;
 
@@ -30,7 +31,7 @@ public class LoginAsAgentActivity extends AppCompatActivity {
     //Widgets
     private TextInputEditText mRegistrationNo, mPassword;
     private Button mLoginBtn;
-    private TextView mLinkLogin;
+    private TextView mLinkLogin, mLinkForgotPass;
 
 
     @Override
@@ -42,6 +43,15 @@ public class LoginAsAgentActivity extends AppCompatActivity {
         mPassword = findViewById(R.id.sign_in_agent_pass);
         mLoginBtn = findViewById(R.id.sign_in_agent_btn);
         mLinkLogin = findViewById(R.id.link_to_login);
+        mLinkForgotPass = findViewById(R.id.link_to_forgot_pass);
+
+        mLinkForgotPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginAsAgentActivity.this, AgentEnterEmailActivity.class);
+                startActivity(intent);
+            }
+        });
 
         mLinkLogin.setOnClickListener(new View.OnClickListener() {
             @Override

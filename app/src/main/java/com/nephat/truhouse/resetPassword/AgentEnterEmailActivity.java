@@ -61,7 +61,7 @@ public class AgentEnterEmailActivity extends AppCompatActivity {
 
                             toastMessage("Verification code sent to email");
                             Intent intent = new Intent(AgentEnterEmailActivity.this, AgentCodeActivity.class);
-                            intent.putExtra("email", email);
+                            intent.putExtra("user_email", email);
                             startActivity(intent);
                         } else {
                             toastMessage("Failed");
