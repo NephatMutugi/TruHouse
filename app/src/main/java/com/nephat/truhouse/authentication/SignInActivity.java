@@ -18,6 +18,7 @@ import com.nephat.truhouse.apputil.AppConfig;
 import com.nephat.truhouse.fragments.AlertsFragment;
 import com.nephat.truhouse.fragments.FeedsFragment;
 import com.nephat.truhouse.models.ApiResponse;
+import com.nephat.truhouse.resetPassword.ResetPasswordActivity;
 import com.nephat.truhouse.retrofitUtil.ApiClient;
 import com.nephat.truhouse.retrofitUtil.ApiInterface;
 
@@ -54,6 +55,7 @@ public class SignInActivity extends AppCompatActivity {
         mSignInBtn = findViewById(R.id.sign_in_btn);
         mAgentLogin = findViewById(R.id.btnEnterAsAgent);
         mLinkRegister = findViewById(R.id.link_reg_text);
+        mForgotPass = findViewById(R.id.forgot_pass_text);
 
         appConfig = new AppConfig(this);
         if (appConfig.isUserLogin()){
@@ -88,6 +90,14 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SignInActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mForgotPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SignInActivity.this, ResetPasswordActivity.class);
                 startActivity(intent);
             }
         });

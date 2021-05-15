@@ -170,8 +170,6 @@ public class AlertsFragment extends Fragment {
                     }
                 });
 
-
-
                 Intent intent = new Intent(getActivity(), RateAgentActivity.class);
                 intent.putExtra("id", agentLists.get(position).getId());
                 intent.putExtra("reg_no", agentLists.get(position).getReg_no());
@@ -190,7 +188,4 @@ public class AlertsFragment extends Fragment {
         };
     }
 
-    private void getAgentRating(){
-
-    }
 }
