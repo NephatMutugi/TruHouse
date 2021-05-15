@@ -5,10 +5,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".resetPassword.ResetPasswordActivity">
+    tools:context=".resetPassword.AgentEnterEmailActivity">
+
+
 
     <TextView
-        android:id="@+id/textReset"
+        android:id="@+id/textAgentReset"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
@@ -23,7 +25,7 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_email"
+        android:id="@+id/input_agent_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -34,10 +36,10 @@
         app:boxStrokeWidth="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textReset">
+        app:layout_constraintTop_toBottomOf="@+id/textAgentReset">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_reset_email"
+            android:id="@+id/edit_agent_reset_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/enter_your_email"
@@ -47,7 +49,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/btnVerifyEmail"
+        android:id="@+id/btnAgentVerifyEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -57,6 +59,6 @@
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/input_email" />
+        app:layout_constraintTop_toBottomOf="@+id/input_agent_email" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
