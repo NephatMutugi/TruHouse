@@ -75,7 +75,7 @@ public class AgentCodeActivity extends AppCompatActivity {
                             String result = putData.getResult();
                             Log.d(TAG, "run: " + result);
                             if (result.equals("Success")){
-                                Intent intent = new Intent(AgentCodeActivity.this, PasswordActivity.class);
+                                Intent intent = new Intent(AgentCodeActivity.this, AgentPasswordActivity.class);
                                 intent.putExtra("email", email);
                                 startActivity(intent);
                             } else {

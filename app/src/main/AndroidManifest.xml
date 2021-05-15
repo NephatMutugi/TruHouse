@@ -18,8 +18,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".resetPassword.AgentCodeActivity"
+        <activity android:name=".resetPassword.AgentPasswordActivity"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"/>
+        <activity
+            android:name=".resetPassword.AgentCodeActivity"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity
             android:name=".resetPassword.AgentEnterEmailActivity"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
