@@ -41,7 +41,7 @@ public class AgentEnterEmailActivity extends AppCompatActivity {
     private void verifyAgentEmail() {
 
         final String email;
-        email = String.valueOf(mAgentEmail);
+        email = String.valueOf(mAgentEmail.getText());
 
         if (!email.isEmpty()){
             Handler handler = new Handler();
