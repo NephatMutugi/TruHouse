@@ -18,9 +18,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".resetPassword.ResetPasswordActivity"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"/>
-
+        <activity android:name=".resetPassword.PasswordActivity"></activity>
+        <activity
+            android:name=".resetPassword.CodeActivity"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
+        <activity
+            android:name=".resetPassword.ResetPasswordActivity"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity android:name=".RateAgentActivity" />
         <activity android:name=".HouseDetailsActivity" />
         <activity android:name=".AgentItemClick" />
@@ -33,7 +37,6 @@
             android:name=".authentication.LoginAsAgentActivity"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity android:name=".authentication.AuthAgentsActivity" />
-
         <activity
             android:name=".UploadHousesActivity"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
