@@ -19,22 +19,22 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".resetPassword.AgentPasswordActivity"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"/>
+            android:theme="@style/Theme.MaterialComponents.Light"/>
         <activity
             android:name=".resetPassword.AgentCodeActivity"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
+            android:theme="@style/Theme.MaterialComponents.Light" />
         <activity
             android:name=".resetPassword.AgentEnterEmailActivity"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
+            android:theme="@style/Theme.MaterialComponents.Light" />
         <activity
             android:name=".resetPassword.PasswordActivity"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
+            android:theme="@style/Theme.MaterialComponents.Light" />
         <activity
             android:name=".resetPassword.CodeActivity"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
+            android:theme="@style/Theme.MaterialComponents.Light" />
         <activity
             android:name=".resetPassword.ResetPasswordActivity"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
+            android:theme="@style/Theme.MaterialComponents.Light" />
         <activity android:name=".RateAgentActivity" />
         <activity android:name=".HouseDetailsActivity" />
         <activity android:name=".AgentItemClick" />
@@ -42,24 +42,24 @@
         <activity android:name=".ChooseActionActivity" />
         <activity
             android:name=".authentication.VerifyAgentActivity"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
+            android:theme="@style/Theme.MaterialComponents.Light" />
         <activity
             android:name=".authentication.LoginAsAgentActivity"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
+            android:theme="@style/Theme.MaterialComponents.Light" />
         <activity android:name=".authentication.AuthAgentsActivity" />
         <activity
             android:name=".UploadHousesActivity"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
+            android:theme="@style/Theme.MaterialComponents.Light">
             <intent-filter>
                 <action android:name="android.intent.action.SEND_MULTIPLE" />
             </intent-filter>
         </activity>
         <activity
             android:name=".authentication.RegisterActivity"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
+            android:theme="@style/Theme.MaterialComponents.Light" />
         <activity
             android:name=".authentication.SignInActivity"
-            android:theme="@style/ThemeOverlay.MaterialComponents.ActionBar">
+            android:theme="@style/Theme.MaterialComponents.Light">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
