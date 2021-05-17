@@ -125,7 +125,6 @@ public class HouseDetailsActivity extends AppCompatActivity {
         phone = String.valueOf(mUserPhone.getText());
         body = String.valueOf(mUserRequest.getText());
 
-
         //Destination for the email
         String [] sendTo = {"nephproject080@gmail.com"};
 
@@ -135,7 +134,7 @@ public class HouseDetailsActivity extends AppCompatActivity {
 
         intent.putExtra(Intent.EXTRA_SUBJECT, "REQUEST INFORMATION ABOUT A HOUSE");
         intent.putExtra(Intent.EXTRA_TEXT, "Personal information : \n Name: " +name + "\n Phone: " +phone
-        + "\n Email: " + email + "\n" + body);
+        + "\n Email: " + email + "\n " + body);
 
         startActivity(Intent.createChooser(intent, "Choose application to use"));
 

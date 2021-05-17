@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -205,15 +204,11 @@ public class UploadHousesActivity extends AppCompatActivity {
         if (requestCode == PICK_IMAGE_FROM_GALLERY_REQUEST && resultCode == RESULT_OK && data != null ){
 
             if (data.getClipData() != null){
-                //Picked multiple images
-
-                int count = data.getClipData().getItemCount();
                 for (int i = 0; i < 3; i++){
                     //Get image uri at specific index
                     Uri imageUri = data.getClipData().getItemAt(i).getUri();
                     imageUris.add(imageUri);
                 }
-
                 try {
                     bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUris.get(0));
                     bitmap2 = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUris.get(1));
@@ -228,21 +223,11 @@ public class UploadHousesActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                //mHouseImage.setImageURI(imageUris.get(0));
-                //mHouseImage2.setImageURI(imageUris.get(1));
-                //mHouseImage3.setImageURI(imageUris.get(2));
-                Log.d(TAG, "onActivityResult: " + bitmap);
-                Log.d(TAG, "onActivityResult: " + bitmap2);
-                Log.d(TAG, "onActivityResult: " + bitmap3);
             }
 
         }
 
     }
-
-
-
-
 
     private String imageToString(){
         ByteArrayOutputStream byteArrayOutputStream;
@@ -262,7 +247,6 @@ public class UploadHousesActivity extends AppCompatActivity {
 
         return convertImage2;
     }
-
     private String imageToString3(){
         ByteArrayOutputStream byteArrayOutputStream;
         byteArrayOutputStream = new ByteArrayOutputStream();
@@ -272,14 +256,12 @@ public class UploadHousesActivity extends AppCompatActivity {
 
         return convertImage3;
     }
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
        /* Intent intent = new Intent(UploadHousesActivity.this, LoginAsAgentActivity.class);
         startActivity(intent);*/
     }
-
 
     private void toastMessage(String message) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();

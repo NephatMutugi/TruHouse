@@ -110,29 +110,6 @@ public class VerifyAgentActivity extends AppCompatActivity {
                     else {
                         toastMessage("Something went wrong");
                     }
-                 /*
-
-                    if (response.code() == 200){
-                        if (response.body().getStatus().equals("ok")){
-                            if (response.body().getResultCode() ==1){
-                                toastMessage("Registration was successful");
-
-                                //TODO send to login as agent
-                                Intent intent = new Intent(VerifyAgentActivity.this,LoginAsAgentActivity.class);
-                                startActivity(intent);
-                                finish();
-                            }else {
-
-                                toastMessage("User already exists");
-
-                            }
-                        } else {
-                            toastMessage("Details already updated");
-                        }
-                    } else {
-                        toastMessage("Something went wrong...");
-                    }
-                    */
                 }
 
                 @Override

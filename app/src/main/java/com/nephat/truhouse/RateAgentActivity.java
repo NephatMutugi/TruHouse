@@ -54,9 +54,7 @@ public class RateAgentActivity extends AppCompatActivity {
         userName = intent.getStringExtra("user_name");
         avgRating = intent.getStringExtra("rating");
 
-
         //getAgentRating();
-
 
         Log.d(TAG, "onCreate: " + userId + " " + userName + " " + id + " " + reg_no);
 

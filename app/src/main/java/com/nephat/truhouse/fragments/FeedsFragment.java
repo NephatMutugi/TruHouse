@@ -67,21 +67,6 @@ public class FeedsFragment extends Fragment {
         setHasOptionsMenu(true);
         super.onViewCreated(view, savedInstanceState);
 
-
-   /*
-        Bundle b3 = getArguments();
-        if (b3 != null) {
-            mName = b3.getString("uName");
-        }
-        if (b3 != null) {
-            mID = b3.getString("uID");
-        }
-
-        Log.d(TAG, "onViewCreated: " + myName + " " + myId);
-
-        //Log.d(TAG, "onViewCreated: " +userName + " " +userEmail);
-
-*/
         setOnClickListener();
         recyclerView = view.findViewById(R.id.myRecyclerView);
         recyclerView.setHasFixedSize(true);
@@ -122,9 +107,6 @@ public class FeedsFragment extends Fragment {
         myName = name;
         myId = id;
     }
-
-
-
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
@@ -183,10 +165,7 @@ public class FeedsFragment extends Fragment {
         };
     }
 
-    private void setHouseInfo(){
 
-
-    }
 
     private void toastMessage(String message){
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
