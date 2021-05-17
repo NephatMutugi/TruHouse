@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.textfield.TextInputEditText;
 import com.nephat.truhouse.MainActivity;
 import com.nephat.truhouse.R;
+import com.nephat.truhouse.admin.AdminWebViewActivity;
 import com.nephat.truhouse.apputil.AppConfig;
 import com.nephat.truhouse.fragments.AlertsFragment;
 import com.nephat.truhouse.fragments.FeedsFragment;
@@ -44,6 +45,8 @@ public class SignInActivity extends AppCompatActivity {
     private String userEmail;
     private String userName, id;
     String loginEmail, loginPassword;
+
+    private String adminName, adminEmail;
 
     FeedsFragment feedsFragment = new FeedsFragment();
 
@@ -112,73 +115,105 @@ public class SignInActivity extends AppCompatActivity {
         loginEmail = String.valueOf(mSignInEmail.getText());
         loginPassword = String.valueOf(mSignInPassword.getText());
 
+
         if (!loginEmail.isEmpty() && !loginPassword.isEmpty()){
+            if (loginEmail.equals("nephproject080@gmail.com")){
 
-            Call<ApiResponse> call = ApiClient.getApiClient().create(ApiInterface.class).performUserLogin(loginEmail, loginPassword);
-            call.enqueue(new Callback<ApiResponse>() {
-                @Override
-                public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
-                    if (response.code() == 200){
+                Call<ApiResponse> call = ApiClient.getApiClient().create(ApiInterface.class).performAdminLogin(loginEmail,loginPassword);
+                call.enqueue(new Callback<ApiResponse>() {
+                    @Override
+                    public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                        if (response.code() == 200){
+                            if (response.body().getStatus().equals("ok")){
+                                if (response.body().getResultCode() ==1){
+                                    adminName = response.body().getName();
+                                    adminEmail = response.body().getEmail();
+                                    Intent intent = new Intent(SignInActivity.this, AdminWebViewActivity.class);
+                                    intent.putExtra("admin_name", adminName);
+                                    intent.putExtra("admin_email", adminEmail);
+                                    startActivity(intent);
 
-                        if (response.body().getStatus().equals("ok")){
+                                }
+                            }
+                        }
+                    }
 
-                            if (response.body().getResultCode() == 1){
+                    @Override
+                    public void onFailure(Call<ApiResponse> call, Throwable t) {
 
-                                userName = response.body().getName();
-                                id = response.body().getId();
-                                userEmail = response.body().getEmail();
+                    }
+                });
 
-                                String myName, myID, myEmail;
-                                myName = userName;
-                                myID = id;
-                                myEmail = userEmail;
-                                Log.d(TAG, "onResponse: " + myName + myID);
+            } else {
 
-                                FeedsFragment feedsFragment1 = new FeedsFragment();
-                                feedsFragment1.setMyData(myName, myID, myEmail);
+                Call<ApiResponse> call = ApiClient.getApiClient().create(ApiInterface.class).performUserLogin(loginEmail, loginPassword);
+                call.enqueue(new Callback<ApiResponse>() {
+                    @Override
+                    public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                        if (response.code() == 200){
 
-                                AlertsFragment alertsFragment = new AlertsFragment();
-                                alertsFragment.setData(myID, myName);
+                            if (response.body().getStatus().equals("ok")){
 
-                                MoreFragment moreFragment = new MoreFragment();
-                                moreFragment.getUserData(myName, myID, myEmail);
+                                if (response.body().getResultCode() == 1){
 
-                                Log.d(TAG, "onResponse: " +userName+" " + "id:" + id + " email: " +myEmail);
+                                    userName = response.body().getName();
+                                    id = response.body().getId();
+                                    userEmail = response.body().getEmail();
+
+                                    String myName, myID, myEmail;
+                                    myName = userName;
+                                    myID = id;
+                                    myEmail = userEmail;
+                                    Log.d(TAG, "onResponse: " + myName + myID);
+
+                                    FeedsFragment feedsFragment1 = new FeedsFragment();
+                                    feedsFragment1.setMyData(myName, myID, myEmail);
+
+                                    AlertsFragment alertsFragment = new AlertsFragment();
+                                    alertsFragment.setData(myID, myName);
+
+                                    MoreFragment moreFragment = new MoreFragment();
+                                    moreFragment.getUserData(myName, myID, myEmail);
+
+                                    Log.d(TAG, "onResponse: " +userName+" " + "id:" + id + " email: " +myEmail);
 
 
-                                if (isRememberUserLogin){
-                                    appConfig.updateUserLoginStatus(true);
-                                    appConfig.saveNameOfUser(userName);
+                                    if (isRememberUserLogin){
+                                        appConfig.updateUserLoginStatus(true);
+                                        appConfig.saveNameOfUser(userName);
+                                    }
+
+                                    Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                                    intent.putExtra("name", myName);
+                                    intent.putExtra("id", myID);
+                                    startActivity(intent);
+                                    finish();
+
+
+
+                                } else {
+                                    toastMessage("Login Failed");
                                 }
 
-                                Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-                                intent.putExtra("name", myName);
-                                intent.putExtra("id", myID);
-                                startActivity(intent);
-                                finish();
 
+                            } else{
 
-
-                            } else {
-                                toastMessage("Login Failed");
+                                toastMessage("Something went wrong...");
                             }
 
-
-                        } else{
-
+                        } else {
                             toastMessage("Something went wrong...");
                         }
-
-                    } else {
-                        toastMessage("Something went wrong...");
                     }
-                }
 
-                @Override
-                public void onFailure(Call<ApiResponse> call, Throwable t) {
+                    @Override
+                    public void onFailure(Call<ApiResponse> call, Throwable t) {
 
-                }
-            });
+                    }
+                });
+            }
+
+
 
 
         } else {

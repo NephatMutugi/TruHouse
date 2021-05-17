@@ -32,6 +32,11 @@ public interface ApiInterface {
     Call<ApiResponse> performUserLogin(@Field("email") String email, @Field("password") String password);
 
     @FormUrlEncoded
+    @POST("loginAdmin.php")
+    Call<ApiResponse> performAdminLogin(@Field("email") String email, @Field("password") String password);
+
+
+    @FormUrlEncoded
     @POST("loginAgent.php")
     Call<ApiResponse> performAgentLogin(@Field("reg_no") String reg_no, @Field("password") String password);
 
