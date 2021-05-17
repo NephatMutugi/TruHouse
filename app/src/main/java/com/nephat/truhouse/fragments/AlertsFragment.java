@@ -99,8 +99,6 @@ public class AlertsFragment extends Fragment {
         AlertsFragment.id = id;
         AlertsFragment.name = name;
 
-
-
         Log.d(TAG, "setData: " +name + " " + id);
     }
 

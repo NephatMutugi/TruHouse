@@ -96,41 +96,6 @@ public class AgentAdapter extends RecyclerView.Adapter<AgentAdapter.ViewHolder> 
         }
     };
 
-/*
-    public Filter getFilter(){
-        return filterAgent;
-    }
-
-    private Filter filterAgent = new Filter() {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            String searchText = constraint.toString().toLowerCase();
-            List<AgentList> tempList = new ArrayList<>();
-            if (searchText.length()== 0 || searchText.isEmpty()){
-                tempList.addAll(newAgentList);
-            } else {
-                for (AgentList item:newAgentList){
-                    if (item.getLocality().toLowerCase().contains(searchText) ||
-                    item.getName().toLowerCase().contains(searchText)){
-                        tempList.add(item);
-                    }
-                }
-            }
-
-            FilterResults filterResults = new FilterResults();
-            filterResults.values = tempList;
-
-            return filterResults;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults filterResults) {
-
-            agentList.clear();
-            agentList.addAll((Collection<? extends AgentList>) filterResults.values);
-            notifyDataSetChanged();
-        }
-    }; */
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 

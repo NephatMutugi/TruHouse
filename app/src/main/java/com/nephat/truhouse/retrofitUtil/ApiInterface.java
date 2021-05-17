@@ -3,6 +3,7 @@ package com.nephat.truhouse.retrofitUtil;
 import com.nephat.truhouse.models.ApiResponse;
 import com.nephat.truhouse.models.FetchAgentHouseResponse;
 import com.nephat.truhouse.models.FetchAgentListResponse;
+import com.nephat.truhouse.models.FetchAgentReviews;
 import com.nephat.truhouse.models.FetchHousesResponse;
 
 import retrofit2.Call;
@@ -62,6 +63,9 @@ public interface ApiInterface {
 
     @GET("fetchAgents.php")
     Call<FetchAgentListResponse> fetchAgentsList();
+
+    @GET("fetchRatings.php")
+    Call<FetchAgentReviews> fetchReviews(@Query("agent_reg") String agent_reg);
 
 
 }

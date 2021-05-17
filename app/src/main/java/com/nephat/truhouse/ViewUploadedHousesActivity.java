@@ -38,7 +38,7 @@ public class ViewUploadedHousesActivity extends AppCompatActivity {
     private TextView mAgentName;
 
     String name, id, regNo;
-    String dispName, dispReg;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

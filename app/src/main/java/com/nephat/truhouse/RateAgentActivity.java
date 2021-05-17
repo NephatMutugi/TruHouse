@@ -12,10 +12,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.nephat.truhouse.models.ApiResponse;
+import com.nephat.truhouse.models.FetchAgentReviews;
+import com.nephat.truhouse.models.ReviewLists;
+import com.nephat.truhouse.recyclerView.ReviewAdapter;
 import com.nephat.truhouse.retrofitUtil.ApiClient;
 import com.nephat.truhouse.retrofitUtil.ApiInterface;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,6 +36,11 @@ public class RateAgentActivity extends AppCompatActivity {
     private RatingBar mRatingBar;
     private EditText mEditReview;
     private Button mBtnSubmitReview;
+
+    RecyclerView recyclerView;
+    List<ReviewLists> reviewLists;
+    private ReviewAdapter reviewAdapter;
+
 
     private String id, reg_no, name, email, phone, locality, qualification, userId, userName, rating;
     String temp;
@@ -69,6 +81,14 @@ public class RateAgentActivity extends AppCompatActivity {
         mBtnSubmitReview = findViewById(R.id.btnSubmitReview);
         mAgentRating = findViewById(R.id.textAgentRating);
         mUserRating = findViewById(R.id.textUserRating);
+
+        recyclerView = findViewById(R.id.ratingRecycler);
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(RateAgentActivity.this, LinearLayoutManager.HORIZONTAL, false);
+
+        recyclerView.setLayoutManager(layoutManager);
+
+        showReviews();
 
         if (avgRating != null){
             mAgentRating.append(avgRating);
@@ -121,6 +141,28 @@ public class RateAgentActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+
+    private void showReviews(){
+        //Retrofit
+        Call<FetchAgentReviews> call = ApiClient.getApiClient().create(ApiInterface.class).fetchReviews(reg_no);
+        call.enqueue(new Callback<FetchAgentReviews>() {
+            @Override
+            public void onResponse(Call<FetchAgentReviews> call, Response<FetchAgentReviews> response) {
+                if (response.isSuccessful()){
+                    reviewLists = response.body().getReviewLists();
+                    reviewAdapter = new ReviewAdapter(reviewLists, RateAgentActivity.this);
+                    recyclerView.setAdapter(reviewAdapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FetchAgentReviews> call, Throwable t) {
+
+            }
+        });
+
     }
 
 

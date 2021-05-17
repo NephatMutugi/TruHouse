@@ -103,9 +103,6 @@ public class AgentHouseAdapter extends RecyclerView.Adapter<AgentHouseAdapter.Ag
         }
     };
 
-
-
-
     public class AgentViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView mHouseTitle, mHouseType, mHouseLocation, mDelete;
