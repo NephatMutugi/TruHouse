@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Fortune House</string>
+    <string name="app_name">Fortune Homes</string>
     <string name="maps_api_key">AIzaSyBhs0UjUWPvR4iDPTdE1L3AjtSIhY90JIs</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="feed">Feed</string>
@@ -48,4 +48,5 @@
     <string name="verify_email">Verify Email</string>
     <string name="new_password">New Password</string>
     <string name="confirm_new_password">Confirm new Password</string>
+    <string name="view_agents">View Agents</string>
 </resources>

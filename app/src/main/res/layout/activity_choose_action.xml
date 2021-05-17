@@ -24,9 +24,9 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginStart="16dp"
+        android:layout_width="168dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="80dp"
         android:padding="10dp"
         app:cardCornerRadius="4dp"
@@ -40,7 +40,6 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_margin="8dp"
-            android:background="@drawable/rounded_text_view"
             android:gravity="center"
             android:padding="8dp"
             android:text="Upload new property"
@@ -54,8 +53,9 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:id="@+id/cardView3"
+        android:layout_width="168dp"
+        android:layout_height="200dp"
         android:layout_marginTop="80dp"
         android:layout_marginEnd="16dp"
         android:padding="10dp"
@@ -69,7 +69,6 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_margin="8dp"
-            android:background="@drawable/rounded_text_view"
             android:gravity="center"
             android:padding="8dp"
             android:text="View properties you've uploaded"
