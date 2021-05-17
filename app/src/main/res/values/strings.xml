@@ -49,4 +49,6 @@
     <string name="new_password">New Password</string>
     <string name="confirm_new_password">Confirm new Password</string>
     <string name="view_agents">View Agents</string>
+    <string name="feedback_txt">Please leave detailed feedback</string>
+    <string name="help_text">We\'d love your feedback on Fortune homes. In case of any complaints, add them below</string>
 </resources>
