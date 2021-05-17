@@ -54,17 +54,12 @@ public class HouseAdapter extends RecyclerView.Adapter<HouseAdapter.ViewHolder> 
         Picasso.get().load("http://192.168.100.2/realEstate/" +list.getImage_path())
                 .into(holder.mDisplayHouse);
 
-        //Picasso.get().load(houseList.get(position).getImageUrl()).into(holder.mDisplayHouse);
-        //holder.mHouseType.setText(houseList.get(position).getHouseType());
-        //holder.mHouseLocation.setText(houseList.get(position).getHouseLocation());
-
     }
 
     @Override
     public int getItemCount() {
         return houseList.size();
     }
-
 
     @Override
     public Filter getFilter() {

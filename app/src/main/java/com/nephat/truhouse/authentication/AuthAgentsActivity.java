@@ -107,8 +107,6 @@ public class AuthAgentsActivity extends AppCompatActivity {
 
     }
 
-
-
     private void showImageImportDialog(){
         //Items to display on dialog
         String[] items = {" Camera", " Gallery"};
@@ -258,7 +256,6 @@ public class AuthAgentsActivity extends AppCompatActivity {
                 Uri resultUri = result.getUri();
                 //Set Image to image view
                 mLicenceImage.setImageURI(resultUri);
-
                 //Get drawable bitmap for text recognition
                 BitmapDrawable bitmapDrawable = (BitmapDrawable)mLicenceImage.getDrawable();
                 Bitmap bitmap = bitmapDrawable.getBitmap();
@@ -284,9 +281,6 @@ public class AuthAgentsActivity extends AppCompatActivity {
                     String toText = stringBuilder.toString();
                     String number  = toText.replaceAll("[^0-9]", "");
                     regNumber = number;
-
-                    //Set Text to edit text
-                    //mRegNo.setText(stringBuilder.toString());
                      mRegNo.setText(number);
                     Log.d(TAG, "onActivityResult: " + number);
                 }

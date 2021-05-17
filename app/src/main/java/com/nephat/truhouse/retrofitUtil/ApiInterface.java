@@ -64,34 +64,4 @@ public interface ApiInterface {
     Call<FetchAgentListResponse> fetchAgentsList();
 
 
-/*   @FormUrlEncoded
-   @GET("fetchUsers.php")
-    Call<FetchHousesResponse> fetchHouseInfo(@Field("image_path") String image_path,
-                                             @Field("house_type") String house_type, @Field("location") String location);
-
-                                             */
-
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-  /* @Multipart
-    @POST("upload.php")
-    Call<ResponseBody>uploadPhoto(@Part("description") RequestBody description,
-                                  @Part("location") RequestBody location,
-                                  @Part("price") RequestBody price,
-                                  @Part("type") RequestBody type,
-                                  @Part("contact") RequestBody contact,
-                                  @Part MultipartBody.Part photo
-   ); */

@@ -23,7 +23,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.material.textfield.TextInputEditText;
-import com.nephat.truhouse.authentication.LoginAsAgentActivity;
 import com.nephat.truhouse.models.ApiResponse;
 import com.nephat.truhouse.retrofitUtil.ApiClient;
 import com.nephat.truhouse.retrofitUtil.ApiInterface;
@@ -277,8 +276,8 @@ public class UploadHousesActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(UploadHousesActivity.this, LoginAsAgentActivity.class);
-        startActivity(intent);
+       /* Intent intent = new Intent(UploadHousesActivity.this, LoginAsAgentActivity.class);
+        startActivity(intent);*/
     }
 
 
@@ -295,32 +294,4 @@ public class UploadHousesActivity extends AppCompatActivity {
 }
 
 
-/*
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PICK_IMAGE_FROM_GALLERY_REQUEST && resultCode == RESULT_OK && data != null ){
-            Uri path = data.getData();
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), path);
-                mHouseImage.setImageBitmap(bitmap);
-                mHouseImage.setVisibility(View.VISIBLE);
-            } catch (IOException e){
-                e.printStackTrace();
-            }
-        } else if(requestCode == PICK_MULTIPLE_REQUEST && resultCode == RESULT_OK && data != null){
-            ClipData clipData = data.getClipData();
-            if (clipData != null){
-                mHouseImage.setImageURI(clipData.getItemAt(0).getUri());
-                mHouseImage2.setImageURI(clipData.getItemAt(1).getUri());
-                mHouseImage3.setImageURI(clipData.getItemAt(2).getUri());
-
-                ClipData.Item item = clipData.getItemAt(0);
-                ClipData.Item item2 = clipData.getItemAt(1);
-                ClipData.Item item3 = clipData.getItemAt(2);
-                            }
-        }
-
-    }
-    */

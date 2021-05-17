@@ -51,8 +51,6 @@ public class AgentAdapter extends RecyclerView.Adapter<AgentAdapter.ViewHolder> 
         AgentList list = agentList.get(position);
         holder.agentName.setText(String.valueOf(list.getName()));
         holder.agentLocality.setText(String.valueOf(list.getLocality()));
-
-
     }
 
     @Override
