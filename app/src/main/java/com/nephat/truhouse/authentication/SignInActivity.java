@@ -18,6 +18,7 @@ import com.nephat.truhouse.R;
 import com.nephat.truhouse.apputil.AppConfig;
 import com.nephat.truhouse.fragments.AlertsFragment;
 import com.nephat.truhouse.fragments.FeedsFragment;
+import com.nephat.truhouse.fragments.MoreFragment;
 import com.nephat.truhouse.models.ApiResponse;
 import com.nephat.truhouse.resetPassword.ResetPasswordActivity;
 import com.nephat.truhouse.retrofitUtil.ApiClient;
@@ -143,6 +144,9 @@ public class SignInActivity extends AppCompatActivity {
 
                                 AlertsFragment alertsFragment = new AlertsFragment();
                                 alertsFragment.setData(myID, myName);
+
+                                MoreFragment moreFragment = new MoreFragment();
+                                moreFragment.getUserData(myName, myID, myEmail);
 
                                 Log.d(TAG, "onResponse: " +userName+" " + "id:" + id + " email: " +myEmail);
 

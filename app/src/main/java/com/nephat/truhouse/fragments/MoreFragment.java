@@ -2,6 +2,7 @@ package com.nephat.truhouse.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,10 +25,12 @@ public class MoreFragment extends Fragment {
 
     //Widgets
     private Button btnSignIn;
-    private TextView mLogout;
-    private LinearLayout sendToUpload, authAgents;
+    private TextView mLogout, mUserName;
+    private LinearLayout sendToHelp, authAgents, mLogOut;
 
     private AppConfig appConfig;
+
+    private static  String name, email, id;
 
     public MoreFragment() {
         // Required empty public constructor
@@ -38,14 +41,17 @@ public class MoreFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_more, container, false);
-        btnSignIn = view.findViewById(R.id.btn_sign_in);
+       // btnSignIn = view.findViewById(R.id.btn_sign_in);
         mLogout = view.findViewById(R.id.logout);
-        sendToUpload = view.findViewById(R.id.linearLayoutPreQualified);
+        sendToHelp = view.findViewById(R.id.linearLayoutPreQualified);
         authAgents = view.findViewById(R.id.linearLayoutMortgageCalc);
+        mLogOut = view.findViewById(R.id.linearLayoutHelp);
+        mUserName = view.findViewById(R.id.textUserName);
+        mUserName.setText(name);
 
         appConfig = new AppConfig(getActivity().getApplicationContext());
 
-        sendToUpload.setOnClickListener(new View.OnClickListener() {
+        sendToHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), UploadHousesActivity.class);
@@ -62,7 +68,7 @@ public class MoreFragment extends Fragment {
         });
 
 
-        mLogout.setOnClickListener(new View.OnClickListener() {
+        mLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 appConfig.updateUserLoginStatus(false);
@@ -71,14 +77,14 @@ public class MoreFragment extends Fragment {
             }
         });
 
-
-        btnSignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), SignInActivity.class);
-                startActivity(intent);
-            }
-        });
         return view;
+    }
+
+    public void getUserData(String name, String id, String email){
+        MoreFragment.name = name;
+        MoreFragment.id = id;
+        MoreFragment.email = email;
+        Log.d(TAG, "setMyData: " +name + " " + id + email);
+
     }
 }

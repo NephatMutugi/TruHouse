@@ -103,9 +103,6 @@ public class FeedsFragment extends Fragment {
         this.email = email;
         Log.d(TAG, "setMyData: " +name + " " + id + email);
 
-        String myName, myId;
-        myName = name;
-        myId = id;
     }
 
     @Override
