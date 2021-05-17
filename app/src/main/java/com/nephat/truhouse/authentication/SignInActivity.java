@@ -134,11 +134,6 @@ public class SignInActivity extends AppCompatActivity {
                                 myEmail = userEmail;
                                 Log.d(TAG, "onResponse: " + myName + myID);
 
-                                /*Bundle b2 = new Bundle();
-                                b2.putString("uName", myName);
-                                b2.putString("uID", myID);
-                                FeedsFragment feedsFragment1 = new FeedsFragment();
-                                feedsFragment1.setArguments(b2);*/
                                 FeedsFragment feedsFragment1 = new FeedsFragment();
                                 feedsFragment1.setMyData(myName, myID, myEmail);
 

@@ -18,8 +18,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".HelpActivity"
-            android:theme="@style/Theme.MaterialComponents.Light"/>
+        <activity android:name=".admin.AdminWebViewActivity"></activity>
+        <activity
+            android:name=".HelpActivity"
+            android:theme="@style/Theme.MaterialComponents.Light" />
         <activity
             android:name=".resetPassword.AgentPasswordActivity"
             android:theme="@style/Theme.MaterialComponents.Light" />
