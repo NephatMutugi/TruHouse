@@ -33,7 +33,7 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("loginAdmin.php")
-    Call<ApiResponse> performAdminLogin(@Field("email") String email, @Field("password") String password);
+    Call<ApiResponse> performAdminLogin(@Field("admin_email") String email, @Field("admin_password") String password);
 
 
     @FormUrlEncoded

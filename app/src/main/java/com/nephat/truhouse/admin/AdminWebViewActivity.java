@@ -23,14 +23,19 @@ public class AdminWebViewActivity extends AppCompatActivity {
 
         mWebView.setWebViewClient(new WebViewClient());
         mWebView.getSettings().setJavaScriptEnabled(true);
-        mWebView.loadUrl("https://mail.google.com/mail/u/1/#inbox");
+        mWebView.loadUrl("https://mail.google.com/mail/u/3/#inbox");
 
 
     }
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        if (mWebView.canGoBack()){
+            mWebView.goBack();
+        } else {
+            super.onBackPressed();
+        }
+
     }
 
     private class Callback extends WebViewClient {
