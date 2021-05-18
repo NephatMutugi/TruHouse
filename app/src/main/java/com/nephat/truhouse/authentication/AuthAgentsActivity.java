@@ -38,7 +38,7 @@ public class AuthAgentsActivity extends AppCompatActivity {
 
     private static final String TAG = "AuthAgentsActivity";
 
-    private EditText mResults;
+    private EditText mEnterReg;
     private TextView  mRegNo;
     private Button mBtnSelectImage, mBtnVerifyAgent;
     private ImageView mLicenceImage;
@@ -67,6 +67,7 @@ public class AuthAgentsActivity extends AppCompatActivity {
         mBtnSelectImage = findViewById(R.id.buttonSelectLicence);
         mBtnVerifyAgent = findViewById(R.id.buttonVerify);
         mLicenceImage = findViewById(R.id.licenceImageView);
+        mEnterReg = findViewById(R.id.enterReg);
 
         hideSoftKeyboard();
 
@@ -94,16 +95,24 @@ public class AuthAgentsActivity extends AppCompatActivity {
     //TODO Ensure registration number is set before proceeding to the next activity
 
     private void verifyRegistrationNumber(){
-        String registrationNo;
+        String registrationNo , userReg;
         registrationNo = String.valueOf(mRegNo.getText());
+        userReg = String.valueOf(mEnterReg.getText());
 
-        if (!registrationNo.isEmpty() && registrationNo.matches("\\d+(?:\\.\\d+)?")){
-            Intent intent = new Intent(AuthAgentsActivity.this, VerifyAgentActivity.class);
-            intent.putExtra("REG_NUMBER", registrationNo);
-            startActivity(intent);
+        if (registrationNo.equals(userReg)){
+            if (!registrationNo.isEmpty() && registrationNo.matches("\\d+(?:\\.\\d+)?")){
+                Intent intent = new Intent(AuthAgentsActivity.this, VerifyAgentActivity.class);
+                intent.putExtra("REG_NUMBER", registrationNo);
+                startActivity(intent);
+            } else{
+                toastMessage("No valid registration number found");
+            }
         } else{
-            toastMessage("No valid registration number found");
+            toastMessage("Registration number does not match the one in the license");
         }
+
+
+
 
     }
 

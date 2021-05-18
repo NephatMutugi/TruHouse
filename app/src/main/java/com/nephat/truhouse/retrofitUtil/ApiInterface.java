@@ -46,6 +46,10 @@ public interface ApiInterface {
    Call<ApiResponse> performAgentUpdate(@Field("reg_no") String reg_no, @Field("phone") String phone, @Field("email") String email,
                                         @Field("locality") String locality, @Field("password") String password);
 
+   @FormUrlEncoded
+   @POST("deleteHouse.php")
+   Call<ApiResponse> performHouseDelete(@Field("id") String id);
+
     @FormUrlEncoded
     @POST("updateHouses.php")
     Call<ApiResponse> performHouseUpdate(@Field("id") String id, @Field("location") String location, @Field("price") String price,

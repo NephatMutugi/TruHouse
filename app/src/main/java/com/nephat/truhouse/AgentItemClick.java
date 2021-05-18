@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.denzcoskun.imageslider.ImageSlider;
@@ -136,15 +137,49 @@ public class AgentItemClick extends AppCompatActivity {
 
     }
 
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu item) {
         getMenuInflater().inflate(R.menu.menu_item, item);
         MenuItem menuItem = item.findItem(R.id.deleteItem);
 
 
-
-
         return super.onCreateOptionsMenu(item);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        int itemId = item.getItemId();
+        if (itemId==R.id.deleteItem){
+            toastMessage("Clicked");
+            Call<ApiResponse> call = ApiClient.getApiClient().create(ApiInterface.class).performHouseDelete(hId);
+            call.enqueue(new Callback<ApiResponse>() {
+                @Override
+                public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                    if (response.code()==200){
+                        if (response.body().getResultCode()==1){
+                            toastMessage("House successfully deleted");
+                        }else {
+                            toastMessage("Not deleted");
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ApiResponse> call, Throwable t) {
+
+                }
+            });
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void openDialog(){
+
     }
 
     private void toastMessage(String message){
