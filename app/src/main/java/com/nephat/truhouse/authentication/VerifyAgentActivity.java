@@ -100,13 +100,18 @@ public class VerifyAgentActivity extends AppCompatActivity {
             call.enqueue(new Callback<ApiResponse>() {
                 @Override
                 public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
-                    if (response.isSuccessful()){
-                        toastMessage("Registered successfully");
-                        Intent intent = new Intent(VerifyAgentActivity.this,LoginAsAgentActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
+                    if (response.code()==200){
 
+                        if (response.body().getStatus().equals("ok")){
+                            if (response.body().getResultCode() == 1){
+                                toastMessage("Registered successfully");
+                                Intent intent = new Intent(VerifyAgentActivity.this,LoginAsAgentActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        }
+
+                    }
                     else {
                         toastMessage("Something went wrong");
                     }

@@ -88,8 +88,8 @@ public class ViewUploadedHousesActivity extends AppCompatActivity {
                 intent.putExtra("image2", agentHouseList.get(position).getImage_path2());
                 intent.putExtra("image3", agentHouseList.get(position).getImage_path3());
                 intent.putExtra("location", agentHouseList.get(position).getLocation());
-                intent.putExtra("price", agentHouseList.get(position).getLocation());
-                intent.putExtra("contact", agentHouseList.get(position).getLocation());
+                intent.putExtra("price", agentHouseList.get(position).getPrice());
+                intent.putExtra("contact", agentHouseList.get(position).getContact());
                 intent.putExtra("description", agentHouseList.get(position).getDescription());
                 intent.putExtra("house_type", agentHouseList.get(position).getHouse_type());
                 intent.putExtra("house_id", agentHouseList.get(position).getId());

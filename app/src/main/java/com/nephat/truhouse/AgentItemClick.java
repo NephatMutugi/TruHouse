@@ -2,9 +2,12 @@ package com.nephat.truhouse;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,9 +17,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
+import com.nephat.truhouse.models.ApiResponse;
+import com.nephat.truhouse.retrofitUtil.ApiClient;
+import com.nephat.truhouse.retrofitUtil.ApiInterface;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AgentItemClick extends AppCompatActivity {
 
@@ -26,9 +36,10 @@ public class AgentItemClick extends AppCompatActivity {
     //Widgets
     private EditText mHouseType, mHouseLocation, mHousePrice, mHouseContact, mHouseDescription;
     private TextView mHouseTitle;
+    private Button mUpdateBtn;
 
 
-    String id, title, imagePath, imagePath2, imagePath3, location, price, houseType, contact, description;
+    String hId, title, imagePath, imagePath2, imagePath3, mLocation, mPrice, mHouse_Type, mContact, mDescription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,31 +52,32 @@ public class AgentItemClick extends AppCompatActivity {
         imagePath = intent.getStringExtra("image");
         imagePath2 = intent.getStringExtra("image2");
         imagePath3 = intent.getStringExtra("image3");
-        location = intent.getStringExtra("location");
-        price = intent.getStringExtra("price");
-        contact = intent.getStringExtra("contact");
-        houseType = intent.getStringExtra("house_type");
-        description = intent.getStringExtra("description");
-        id = intent.getStringExtra("house_id");
+        mLocation = intent.getStringExtra("location");
+        mPrice = intent.getStringExtra("price");
+        mContact = intent.getStringExtra("contact");
+        mHouse_Type = intent.getStringExtra("house_type");
+        mDescription = intent.getStringExtra("description");
+        hId = intent.getStringExtra("house_id");
 
         mHouseTitle = findViewById(R.id.agentHouseTitle);
         mHouseTitle.setText(title);
 
         mHouseType = findViewById(R.id.agentDispType);
-        mHouseType.setText(houseType);
+        mHouseType.setText(mHouse_Type);
 
         mHouseLocation = findViewById(R.id.agentDispLocation);
-        mHouseLocation.setText(location);
+        mHouseLocation.setText(mLocation);
 
         mHousePrice = findViewById(R.id.agentDispPrice);
-        mHousePrice.setText(price);
+        mHousePrice.setText(mPrice);
 
         mHouseContact = findViewById(R.id.agentDispContact);
-        mHouseContact.setText(contact);
+        mHouseContact.setText(mContact);
 
         mHouseDescription = findViewById(R.id.agentDispDescription);
-        mHouseDescription.setText(description);
+        mHouseDescription.setText(mDescription);
 
+        mUpdateBtn = findViewById(R.id.updateBtn);
 
 
         ImageSlider imageSlider = findViewById(R.id.agentHouseImageSlider);
@@ -76,8 +88,53 @@ public class AgentItemClick extends AppCompatActivity {
         imageSlider.setImageList(slideModels, ScaleTypes.FIT);
 
 
+        mUpdateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateHouseDetails();
+            }
+        });
     }
 
+
+    private void updateHouseDetails(){
+        String id, location, price, house_type, contact, description;
+        id = hId;
+        location = String.valueOf(mHouseLocation.getText());
+        price = String.valueOf(mHousePrice.getText());
+        house_type = String.valueOf(mHouseType.getText());
+        contact = String.valueOf(mHouseContact.getText());
+        description = String.valueOf(mHouseDescription.getText());
+
+        if (TextUtils.isEmpty(location) || TextUtils.isEmpty(price) || TextUtils.isEmpty(house_type) || TextUtils.isEmpty(contact) || TextUtils.isEmpty(description)){
+            toastMessage("Fields cannot be empty");
+        } else {
+            Call<ApiResponse> call = ApiClient.getApiClient().create(ApiInterface.class)
+                    .performHouseUpdate(id, location, price, house_type, contact, description);
+            call.enqueue(new Callback<ApiResponse>() {
+                @Override
+                public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                    if (response.code()==200){
+                        if (response.body().getStatus().equals("ok")){
+                            if (response.body().getResultCode() ==1){
+                                toastMessage("Details updated successfully");
+                            } else {
+                                toastMessage("An error occurred");
+                            }
+                        } else {
+                            toastMessage("Details not updated");
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ApiResponse> call, Throwable t) {
+
+                }
+            });
+        }
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu item) {
