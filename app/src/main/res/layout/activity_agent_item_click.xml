@@ -63,7 +63,6 @@
             android:hint="One bedroom"
             android:textColor="@color/black"
             android:textSize="18sp"
-            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/agentHouseTitle" />
 
@@ -98,7 +97,6 @@
             android:hint="Location"
             android:textColor="@color/black"
             android:textSize="18sp"
-            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/agentDispType" />
 
@@ -111,7 +109,6 @@
             android:hint="Price in Ksh"
             android:textColor="@color/black"
             android:textSize="18sp"
-            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/agentDispLocation" />
 

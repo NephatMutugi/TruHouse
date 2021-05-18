@@ -28,7 +28,7 @@ public class AgentItemClick extends AppCompatActivity {
     private TextView mHouseTitle;
 
 
-    String title, imagePath, imagePath2, imagePath3, location, price, houseType, contact, description;
+    String id, title, imagePath, imagePath2, imagePath3, location, price, houseType, contact, description;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +46,27 @@ public class AgentItemClick extends AppCompatActivity {
         contact = intent.getStringExtra("contact");
         houseType = intent.getStringExtra("house_type");
         description = intent.getStringExtra("description");
+        id = intent.getStringExtra("house_id");
 
         mHouseTitle = findViewById(R.id.agentHouseTitle);
         mHouseTitle.setText(title);
+
         mHouseType = findViewById(R.id.agentDispType);
         mHouseType.setText(houseType);
+
+        mHouseLocation = findViewById(R.id.agentDispLocation);
+        mHouseLocation.setText(location);
+
+        mHousePrice = findViewById(R.id.agentDispPrice);
+        mHousePrice.setText(price);
+
+        mHouseContact = findViewById(R.id.agentDispContact);
+        mHouseContact.setText(contact);
+
+        mHouseDescription = findViewById(R.id.agentDispDescription);
+        mHouseDescription.setText(description);
+
+
 
         ImageSlider imageSlider = findViewById(R.id.agentHouseImageSlider);
         List<SlideModel> slideModels = new ArrayList<>();
@@ -64,12 +80,14 @@ public class AgentItemClick extends AppCompatActivity {
 
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_item, menu);
-        MenuItem menuItem = menu.findItem(R.id.deleteItem);
+    public boolean onCreateOptionsMenu(Menu item) {
+        getMenuInflater().inflate(R.menu.menu_item, item);
+        MenuItem menuItem = item.findItem(R.id.deleteItem);
 
 
-        return super.onCreateOptionsMenu(menu);
+
+
+        return super.onCreateOptionsMenu(item);
     }
 
     private void toastMessage(String message){

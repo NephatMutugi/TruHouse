@@ -2,6 +2,7 @@ package com.nephat.truhouse.models;
 
 public class AgentHouse {
 
+    private String id;
     private String image_path;
     private String image_path2;
     private String image_path3;
@@ -16,7 +17,8 @@ public class AgentHouse {
 
     }
 
-    public AgentHouse(String image_path, String image_path2, String image_path3, String title, String location, String price, String contact, String description, String house_type) {
+    public AgentHouse(String id, String image_path, String image_path2, String image_path3, String title, String location, String price, String contact, String description, String house_type) {
+        this.id = id;
         this.image_path = image_path;
         this.image_path2 = image_path2;
         this.image_path3 = image_path3;
@@ -26,6 +28,10 @@ public class AgentHouse {
         this.contact = contact;
         this.description = description;
         this.house_type = house_type;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getImage_path() {

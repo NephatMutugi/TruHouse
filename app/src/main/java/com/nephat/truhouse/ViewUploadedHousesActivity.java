@@ -92,6 +92,7 @@ public class ViewUploadedHousesActivity extends AppCompatActivity {
                 intent.putExtra("contact", agentHouseList.get(position).getLocation());
                 intent.putExtra("description", agentHouseList.get(position).getDescription());
                 intent.putExtra("house_type", agentHouseList.get(position).getHouse_type());
+                intent.putExtra("house_id", agentHouseList.get(position).getId());
 
                 startActivity(intent);
             }
